@@ -1,0 +1,37 @@
+<h1>title1</h1>
+<% var count = count %>
+<% for(var i=1;i<=count;i++){ %>
+<div class="container" id="<%= title %><%=i%><%=i%><%=i%>">
+    <div class="content">
+        <h2>Lorem ipsum dolor sit amet consectetur adipisicing elit. Autem eveniet ex magni deserunt nesciunt, optio provident voluptate dolor impedit reiciendis hic. Cumque perspiciatis doloremque, nulla temporibus ipsum quod harum animi!
+        Perferendis totam sed quidem iusto asperiores odio facilis,dicta, aspernatur exercitationem repellendus velit eligendi dolorem autem, molestiae officiis culpa suscipit! Molestias similique dolores quia eveniet eos earum. Placeat, eius ea! temporibus quaerat in cupiditate esse illum dolores aliquid doloribus vero voluptatibus inventore deleniti commodi rem. Quia beatae omnis expedita pariatur quidem ad.</h2>
+    </div>
+    <div class="imge">
+        <img src="/assets/<%=image%>/images<%=id%>/image<%=i%>.svg" alt="">
+    </div>
+</div>
+<div class="action">
+    <button data-modal-target="#modal<%=i%>">Edit</button>
+    <div class="modal" id="modal<%=i%>">
+        <div class="modal-header">
+            <div class="title">
+                Choose the file:
+            </div>
+            <button data-close-button class="close-button">
+                &times;
+            </button>
+        </div>
+        <div class="modal-body">
+            <form id="<%= title %><%=i%>" action="/api/<%= title %>/<%=i%>" method="POST" enctype="multipart/form-data">
+                <label for="content"><h2>Enter the content:</h2></label>
+                <input type="text" name="content">
+                <input type="file" name="image">
+                <button class="<%= title %><%=i%><%=i%>" form="<%= title %><%=i%>" type="submit">SEND</button>
+            </form>
+        </div>
+    </div>
+    <div id="overlay">
+
+    </div>
+</div>
+<% } %>

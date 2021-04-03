@@ -1,0 +1,301 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing: border-box;
+}
+a{
+    text-decoration: none;
+    color:inherit;
+}
+body{
+    min-height:100vh;
+}
+
+/* navbar */
+
+
+.navbar{
+    width:80%;
+    margin:10px auto;
+    display:flex;
+    justify-content: space-between;
+}
+.title{
+    margin:5px 20px;
+    text-align: center;
+}
+.menu{
+    min-width:100px;
+    width:60%;
+}
+ul{
+    margin:0 auto;
+    width:100%;
+    display: flex;
+    justify-content: space-around;
+}
+li{
+    display: inline-block;
+    list-style: none;
+    margin:0 10px;
+}
+li:hover{
+    border-bottom: 2px solid black;
+}
+
+/* main body */
+
+.main{
+    height:90vh;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.banner{
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.bimage{
+    height: 50%;
+}
+img{
+    margin: 20px 0;
+    height:100%;
+}
+
+/* projects */
+
+.projects{
+    padding: 50px 0;
+    height:100%;
+}
+
+.projects h1{
+    text-align: center;
+}
+
+.container1{
+    display:flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.cards{
+    width:30%;
+    margin-top:35px;
+    transition:all 0.8s ease-in-out;
+}
+.cards:hover{
+    background-color: rgb(46, 172, 56);
+}
+
+.cards .content{
+    text-align: center;
+    margin: 40px 0;
+}
+
+.imge{
+    width:70%;
+    height:70%;
+    margin: 0 auto;
+}
+img{
+    width:100%;
+    height:100%;
+  }
+
+/* blogs */
+
+.blogs{
+    padding: 50px 0;
+    height:100%;
+}
+
+.blogs h1{
+    text-align: center;
+    margin:30px 0;
+}
+
+.container1{
+    display:flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.blogs .cards:hover{
+    background-color: rgba(200, 255, 0, 0.808);
+}
+
+/* contact */
+
+.container3{
+    height: 100%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.box1{
+    width:100%;
+    border-radius: 10px;
+    /* border:2px solid black; */
+}
+.contact{   
+    width:80%;
+    margin:0 auto;
+    border-radius: 10px;
+}
+.contact h1{
+    text-align: center;
+    margin-bottom: 30px;
+}
+input{
+      width:100%;
+      height:20%;
+      font-size: 20px;
+      margin:30px auto;
+      border:2px solid black;
+}
+button{
+    /* width:50%;
+    height:50%; */
+    padding:10px 25px;
+    font-size:15px;
+    font-weight: bold;
+    margin:5px 30px;
+    background-color: white;
+    border-style: none;
+    border:2px solid black;
+}
+
+.box2{
+    width:100%;
+    text-align: center;
+    /* border:2px solid black; */
+}
+.box2 .address{
+    margin:20px 0;
+}
+.box2 .email{
+    margin:20px 0;
+}
+.box2 .phno{
+    margin:20px 0;
+}
+
+/* overlay */
+
+.modal{
+    position:fixed;
+    top:50%;
+    left:50%;
+    transform: translate(-50%,-50%) scale(0);
+    border:solid 1px black;
+    border-radius: 10px;
+    z-index:10;
+    background-color: white;
+    transition: 200ms ease-in-out;
+    width:500px;
+    max-width:80%;
+}
+
+.modal.active{
+    transform: translate(-50%,-50%) scale(1);
+}
+
+.modal-header{
+    padding: 10px 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: solid 1px black;
+}
+
+.modal-header .title{
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.modal-header .close-button{
+    cursor: pointer;
+    border:none;
+    outline:none;
+    background-color: none;
+    font-size:1.25rem;
+    font-weight:bold;
+}
+
+.modal-body{
+    padding:10px 15px;
+}
+
+#overlay{
+    position:fixed;
+    top:0;
+    left:0;
+    right:0;
+    bottom:0;
+    pointer-events: none;
+}
+
+#overlay.active{
+    pointer-events: all;
+    opacity:1;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+/* media queries */
+@media (min-width:600px){
+    .container3{
+        height: 100vh;
+    }
+}
+
+@media (max-width:600px) {
+    .navbar{
+        display: flex;
+        gap:10px;
+        width:90%;
+        padding: 15px 0;
+        border-radius: 10px;
+        background-color: blue;
+        color:white;
+        flex-direction: column;
+    }
+    li:hover{
+        border-bottom: 2px solid white;
+    }   
+    .menu{
+        margin:0 auto;
+    }
+    .main{
+        flex-direction: column-reverse;
+    }
+    .banner{
+        margin:0 5px;
+    }
+    .container1{
+        flex-direction: column;
+        gap:10px;
+    }
+    .cards{
+        width:90%;
+    }
+    .container3{
+        flex-direction: column;
+        height:100%;
+    }
+    .box1{
+        padding: 30px 0;
+    }
+    .box2{
+        font-size: 10px;
+        background-color: black;
+        color: white;
+    }
+}

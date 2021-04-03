@@ -1,0 +1,32 @@
+<div class="main">
+    <div class="banner">
+       <h1>
+           <%= profileData.content%>
+       </h1>
+       <button data-modal-target="#modal0">Edit</button>
+       <div class="modal" id="modal0">
+           <div class="modal-header">
+               <div class="title">
+                   Choose the file:
+               </div>
+               <button data-close-button class="close-button">
+                   &times;
+               </button>
+           </div>
+           <div class="modal-body">
+               <form action="/api/profile" method="POST" enctype="multipart/form-data">
+                   <label for="content"><h2>Enter the content:</h2></label>
+                   <input type="text" name="content">
+                   <input type="file" name="image">
+                   <button type="submit">SEND</button>
+               </form>
+           </div>
+       </div>
+       <div id="overlay">
+   
+       </div>
+    </div>
+    <div class="bimage">
+        <img src="/assets/profile/profile.svg" alt="profile">
+    </div>
+</div>

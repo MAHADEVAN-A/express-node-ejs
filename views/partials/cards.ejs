@@ -1,0 +1,53 @@
+<div class="projects">
+    <div class="container1">
+        <% var count = count %>
+        <% for(var i=1;i<=count;i++){ %>
+        <div class="cards">
+            <div class="imge">
+                <img src="/assets/<%=image%>/image<%=i%>.svg"/>
+            </div>
+            <div class="content">
+                <h2><%= cont[i-1].content %></h2>
+                <button data-modal-target="#modal<%=i%>">Edit</button>
+                <div class="modal" id="modal<%=i%>">
+                    <div class="modal-header">
+                        <div class="title">
+                            Choose the file:
+                        </div>
+                        <button data-close-button class="close-button">
+                            &times;
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="<%= title %><%=i%>" action="/api/<%= title %>/<%=i%>" method="POST" enctype="multipart/form-data">
+                            <label for="content"><h2>Enter the content:</h2></label>
+                            <input type="text" name="content">
+                            <input type="file" name="image">
+                            <button class="<%= title %><%=i%><%=i%>" form="<%= title %><%=i%>" type="submit">SEND</button>
+                        </form>
+                    </div>
+                </div>
+                <div id="overlay">
+            
+                </div>
+            </div>
+        </div>
+        <% } %>
+        
+    </div>
+</div>
+<script>
+    var cards = document.getElementsByClassName('cards')
+    console.log(cards)
+     var count = '<%-count %>';
+     var detail = '<%-detail%>';
+     console.log(count,'maha')
+     for(var j=1;j<=count;j++){ 
+         console.log(j,count);
+         const loca = `http://localhost:5000/${detail}/${j}`
+        cards[j-1].addEventListener('click',function(){
+            window.location= loca;
+            console.log(j,'count')
+        })
+     }
+</script>
