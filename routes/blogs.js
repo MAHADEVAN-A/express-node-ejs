@@ -41,7 +41,7 @@ router.post('/blogs/:id',upload.single('image'),async(req,res)=>{
     await dmodel.updateBlog(req.params.id,req.body)
     .then(post =>{ 
         console.log(post)
-        res.render('eblog',{title:'blogs',cont:post,count:count,image:'bimage'})
+        res.render('eblog',{title:'blogs',cont:post,count:count,image:'bimage',detail:'ebdetail'})
     })
     .catch(err => {
         if (err.status) {

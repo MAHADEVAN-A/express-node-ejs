@@ -90,6 +90,8 @@ img{
     margin-top:35px;
     transition:all 0.8s ease-in-out;
 }
+
+
 .cards:hover{
     background-color: rgb(46, 172, 56);
 }

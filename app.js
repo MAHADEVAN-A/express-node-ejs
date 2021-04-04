@@ -4,6 +4,8 @@ const data = require('./data/profile.json')
 const cdata = require('./data/contact.json')
 const pdata = require('./data/projects.json')
 const bdata = require('./data/blogs.json')
+const pdetails = require('./data/pdetails/details.json')
+const bdetails = require('./data/bdetails/details.json')
 
 const app = express()
 const routes= require('./routes/index')
@@ -40,17 +42,17 @@ app.get('/eproject',(req,res)=>{
 })
 
 app.get('/epdetail/:id',(req,res)=>{
-    const id = req.params.id
-    res.render('epdetail',{title:'pdetail',count:count3,image:'pdetail',id})
+    let id = req.params.id
+    res.render('epdetail',{title:'pdetail',count:count3,image:'pdetail',id,details:pdetails[id-1].pdetails})
 })
 
 app.get('/eblog',(req,res)=>{
     res.render('eblog',{title:'blogs',cont:bdata,count:count2,image:'bimage',detail:'ebdetail'})
 })
-
+// console.log(bdetails[0].bdetails)
 app.get('/ebdetail/:id',(req,res)=>{
-    const id = req.params.id
-    res.render('ebdetail',{title:'bdetail',count:count4,image:'bdetail',id})
+    let id = req.params.id
+    res.render('ebdetail',{title:'bdetail',count:count4,image:'bdetail',id,details:bdetails[id-1].bdetails})
 })
 
 app.get('/econtact',(req,res)=>{

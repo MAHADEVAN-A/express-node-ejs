@@ -41,7 +41,7 @@ router.post('/projects/:id',upload.single('image'), m.checkContent, async(req,re
     await dmodel.updateProject(req.params.id,req.body)
     .then(post =>{ 
         console.log(post)
-        res.render('eproject',{title:'projects',cont:post,count:count,image:'pimage'})
+        res.render('eproject',{title:'projects',cont:post,count:count,image:'pimage',detail:'epdetail'})
     })
     .catch(err => {
         if (err.status) {
