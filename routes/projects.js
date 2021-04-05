@@ -74,9 +74,20 @@ router.post('/projects/:id',upload.single('image'), m.checkContent, async(req,re
 // })
 
 
-router.post('/addprojects',upload2.single('image'),(req,res)=>{
+router.post('/addprojects',upload2.single('image'),async(req,res)=>{
     console.log(req.body,req.file);
     console.log('in projects')
+
+    await dmodel.insertProject(req.body)
+    .then(post =>{ 
+        console.log(post)
+    })
+    .catch(err => {
+        if (err.status) {
+            res.status(err.status).json({ message: err.message })
+        }
+        res.status(500).json({ message: err.message })
+    })   
     res.end()
 })
 

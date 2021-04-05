@@ -73,7 +73,19 @@ router.post('/blogs/:id',upload.single('image'),async(req,res)=>{
 //     res.send('<h1>Upload project image</h1>')
 // })
 
-router.post('/addblogs',upload2.single('image'),(req,res)=>{
+router.post('/addblogs',upload2.single('image'),async(req,res)=>{
+
+    await dmodel.insertBlog(req.body)
+    .then(post =>{ 
+        console.log(post)
+    })
+    .catch(err => {
+        if (err.status) {
+            res.status(err.status).json({ message: err.message })
+        }
+        res.status(500).json({ message: err.message })
+    })   
+
     console.log(req.body,req.file);
     res.end()
 })

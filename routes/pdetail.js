@@ -64,9 +64,21 @@ router.post('/pdetail/:id/:i',upload.single('image'),async(req,res)=>{
 })
 
 
-router.post('/addpdetail',upload2.array('images',3),(req,res)=>{
+router.post('/addpdetail',upload2.array('images',3),async(req,res)=>{
+
     console.log(req.body,req.files);
     console.log("in pdetail")
+
+    await dmodel.insertPdetail(req.body)
+    .then(post =>{ 
+        console.log(post)
+    })
+    .catch(err => {
+        if (err.status) {
+            res.status(err.status).json({ message: err.message })
+        }
+        res.status(500).json({ message: err.message })
+    })
     res.end('hello')
 })
 

@@ -31,6 +31,17 @@ function updateProject(id,newPost) {
 })
 }
 
+function insertProject(newPost) {
+    return new Promise((resolve, reject) => {
+        const id = { id: helper.getNewId(projects) }
+        
+        newPost = { ...id, ...newPost }
+        projects.push(newPost)
+        helper.writeJSONFile(filename3, projects)
+        resolve(projects)
+    })
+}
+
 function updateBlog(id,newPost) {
     return new Promise((resolve, reject) => {
         helper.mustBeInArray(blogs, id)
@@ -43,6 +54,17 @@ function updateBlog(id,newPost) {
         })
         .catch(err => reject(err))
 })
+}
+
+function insertBlog(newPost) {
+    return new Promise((resolve, reject) => {
+        const id = { id: helper.getNewId(blogs) }
+        
+        newPost = { ...id, ...newPost }
+        blogs.push(newPost)
+        helper.writeJSONFile(filename4, blogs)
+        resolve(blogs)
+    })
 }
 
 function updatePdetail(i,id,newPost) {
@@ -59,6 +81,32 @@ function updatePdetail(i,id,newPost) {
 })
 }
 
+
+function insertPdetail(newPost) {
+    return new Promise((resolve, reject) => {
+        const detail = {
+            pdetails:[
+                {
+                    id: "1",
+                    content: newPost.content1
+                },
+                {
+                    id: "2",
+                    content: newPost.content2
+                },
+                {
+                    id: "3",
+                    content: newPost.content3
+                }
+            ]
+        }
+        pdetails.push(detail)
+        helper.writeJSONFile(filename5, pdetails)
+        resolve(pdetails)
+    })
+}
+
+
 function updateBdetail(i,id,newPost) {
     return new Promise((resolve, reject) => {
         helper.mustBeInArray(bdetails[id-1].bdetails, i)
@@ -71,6 +119,30 @@ function updateBdetail(i,id,newPost) {
         })
         .catch(err => reject(err))
 })
+}
+
+function insertBdetail(newPost) {
+    return new Promise((resolve, reject) => {
+        const detail = {
+            bdetails:[
+                {
+                    id: 1,
+                    content: newPost.content1
+                },
+                {
+                    id: 2,
+                    content: newPost.content2
+                },
+                {
+                    id: 3,
+                    content: newPost.content3
+                }
+            ]
+        }
+        bdetails.push(detail)
+        helper.writeJSONFile(filename6, bdetails)
+        resolve(bdetails)
+    })
 }
 
 function updateContact(newPost) {
@@ -88,5 +160,9 @@ module.exports = {
     updateProject,
     updateBlog,
     updatePdetail,
-    updateBdetail
+    updateBdetail,
+    insertProject,
+    insertBlog,
+    insertPdetail,
+    insertBdetail
 }

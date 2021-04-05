@@ -65,8 +65,19 @@ router.post('/bdetail/:id/:i',upload.single('image'),async(req,res)=>{
     })
 })
 
-router.post('/addbdetail',upload2.array('images',3),(req,res)=>{
+router.post('/addbdetail',upload2.array('images',3),async(req,res)=>{
     console.log(req.body,req.files);
+
+    await dmodel.insertBdetail(req.body)
+    .then(post =>{ 
+        console.log(post)
+    })
+    .catch(err => {
+        if (err.status) {
+            res.status(err.status).json({ message: err.message })
+        }
+        res.status(500).json({ message: err.message })
+    })
     res.end('hello')
 })
 
