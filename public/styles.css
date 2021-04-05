@@ -36,6 +36,7 @@ ul{
 }
 li{
     display: inline-block;
+    display: flex;
     list-style: none;
     margin:0 10px;
 }
@@ -163,6 +164,13 @@ input{
       margin:30px auto;
       border:2px solid black;
 }
+
+.mbody input{
+    width:50%;
+    margin:5px auto;
+    height:10%;
+}
+
 button{
     /* width:50%;
     height:50%; */
@@ -173,6 +181,18 @@ button{
     background-color: white;
     border-style: none;
     border:2px solid black;
+}
+
+.nbutton{
+    padding:5px 5px;
+    font-size:15px;
+    font-weight: bold;
+    margin:0px 10px;
+    background-color: white;
+    border-style: none;
+    border:2px solid black;
+    border-radius: 10px;
+    display: inline-block;
 }
 
 .box2{
@@ -204,6 +224,10 @@ button{
     transition: 200ms ease-in-out;
     width:500px;
     max-width:80%;
+}
+
+.mbody{
+    width:100%;
 }
 
 .modal.active{

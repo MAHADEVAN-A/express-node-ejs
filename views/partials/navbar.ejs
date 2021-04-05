@@ -2,11 +2,130 @@
     <div class="title">
        <h2> <a href="/">devApp</a></h2>
     </div>
+    <% var nlink=['/eproject','/eblog','/econtact'] %>
+    <% var ntext=['project','blog','contact'] %>
     <div class="menu">
         <ul>
-            <li><h2><a href="/eproject">projects</a></h2></li>
-            <li><h2><a href="/eblog">blogs</a></h2></li>
-            <li><h2><a href="/econtact">contact</a></h2></li>
+            <%for(var i=0;i<3;i++){%>
+            <li>
+                <h2><a class="titill" href="<%=nlink[i]%>"><%=ntext[i]%></a></h2>
+                <%if(i!==2){%>
+                <button class="nbutton" data-modal-target="#modal<%=i%>">+</button>
+                <div class="modal mbody" id="modal<%=i%>">
+                    <div class="modal-header">
+                        <div class="title">
+                            Choose the file:
+                        </div>
+                        <button data-close-button class="close-button">
+                            &times;
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                      <%if(ntext[i]=='project'){%>
+                        <form>
+                            <label for="content"><h2>Enter the <%=ntext[i]%> title:</h2></label>
+                            <input type="text" name="content" class="content">
+                            <input type="file" name="image" class="file1">
+                        </form>
+                        <form id="formp2" action="/api/addpdetail" method="POST" enctype="multipart/form-data">
+                            <label for="content1"><h2>Enter the content1:</h2></label>
+                            <input type="text" name="content1" class="content1">
+                            <label for="content2"><h2>Enter the content2:</h2></label>
+                            <input type="text" name="content2" class="content2">
+                            <label for="content3"><h2>Enter the content3:</h2></label>
+                            <input type="text" name="content3" class="content3">
+                            <input type="file" name="images" class="file2" multiple>
+                        </form>
+                        <button class="btn" type="button">SEND</button>
+                      <%}else{%>
+                        <form>
+                            <label for="content"><h2>Enter the <%=ntext[i]%> title:</h2></label>
+                            <input type="text" name="content" class="content">
+                            <input type="file" name="image" class="file1">
+                        </form>
+                        <form id="formb2" action="/api/addbdetail" method="POST" enctype="multipart/form-data">
+                            <label for="content1"><h2>Enter the content1:</h2></label>
+                            <input type="text" name="content1" class="content1">
+                            <label for="content2"><h2>Enter the content2:</h2></label>
+                            <input type="text" name="content2" class="content2">
+                            <label for="content3"><h2>Enter the content3:</h2></label>
+                            <input type="text" name="content3" class="content3">
+                            <input type="file" name="images" class="file2" multiple>
+                        </form>
+                        <button class="btn" type="button">SEND</button>
+                      <%}%>
+                    </div>
+                </div>
+                <div id="overlay">
+            
+                </div>
+                <%}%>
+            </li>
+            <%}%>
         </ul>
     </div>
 </div>
+<script
+  src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"
+  integrity="sha512-bZS47S7sPOxkjU/4Bt0zrhEtWx0y0CRkhEp8IckzK+ltifIIE9EMIMTuT/mEzoIMewUINruDBIR/jJnbguonqQ=="
+  crossorigin="anonymous"
+></script>
+<script>
+  
+      const butt = document.getElementsByClassName('btn')
+      console.log(butt)
+      try 
+      {
+        butt[0].addEventListener('click',async(e)=>{
+          e.preventDefault()
+          // document.getElementById('formp1').submit()
+          const modal = document.getElementById('modal0')
+          const overlay = document.getElementById('overlay')
+          modal.classList.remove('active')
+          overlay.classList.remove('active')
+          var fileinput1 = document.getElementsByClassName('file1')
+          var content = document.getElementsByClassName('content')
+          let formData1 = new FormData()
+          formData1.append('image',fileinput1[0].files[0])
+          formData1.append('content',content[0].value)
+          await  axios.post('http://localhost:5000/api/addprojects',formData1,{
+              headers: {
+                'Content-Type':'multipart/form-data'
+              }
+            }).then(res=>console.log(res)).catch(error=>console.log(error))         
+          document.getElementById('formp2').submit()
+        })
+      } 
+      catch (error) 
+      {
+         console.log(error);
+      }
+    
+  try{
+        butt[1].addEventListener('click',async(e)=>{
+          e.preventDefault()
+          const modal = document.getElementById('modal1')
+          const overlay = document.getElementById('overlay')
+          modal.classList.remove('active')
+          overlay.classList.remove('active')
+          let formData1 = new FormData()
+          var fileinput1 = document.getElementsByClassName('file1')
+          var content = document.getElementsByClassName('content')         
+          formData1.append('image',fileinput1[1].files[0])
+          formData1.append('content',content[1].value)
+          await  axios.post('http://localhost:5000/api/addblogs',formData1,{
+              headers: {
+                'Content-Type':'multipart/form-data'
+              }
+            }).then(res=>console.log(res)).catch(error=>console.log(error))          
+          document.getElementById('formb2').submit()
+        })
+      } 
+      catch (error) 
+      {
+        console.log(error);
+      }
+    
+      
+
+</script>

@@ -12,11 +12,12 @@ const fs = require('fs')
 // app.use(express.urlencoded({ extended: false }))
 // // parse json
 // app.use(express.json())
-let count;
+let count,acount;
 const dir = './public/assets/bimage';
 fs.readdir(dir,(err,files)=>{
     count = files.length;
-    // count++;
+    acount = files.length;
+    acount++;
     console.log(count)
 });
 
@@ -31,6 +32,17 @@ const fileStorageEngine = multer.diskStorage({
     }
 })
 
+const fileStorageEngine1 = multer.diskStorage({
+    destination: (req,file,cb)=>{
+        const dir = './public/assets/bimage'
+        cb(null,dir)
+    },
+    filename: (req,file,cb)=>{
+        cb(null,'image'+acount+'.svg')
+    }
+})
+
+const upload2 = multer({storage:fileStorageEngine1})
 const upload = multer({storage:fileStorageEngine})
 
 
@@ -61,5 +73,9 @@ router.post('/blogs/:id',upload.single('image'),async(req,res)=>{
 //     res.send('<h1>Upload project image</h1>')
 // })
 
+router.post('/addblogs',upload2.single('image'),(req,res)=>{
+    console.log(req.body,req.file);
+    res.end()
+})
 
 module.exports= router;

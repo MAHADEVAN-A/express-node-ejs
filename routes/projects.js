@@ -12,11 +12,12 @@ const fs = require('fs')
 // app.use(express.urlencoded({ extended: false }))
 // // parse json
 // app.use(express.json())
-let count;
+let count,acount;
 const dir = './public/assets/pimage';
 fs.readdir(dir,(err,files)=>{
     count = files.length;
-    // count++;
+    acount = files.length;
+    acount++;
     console.log(count)
 });
 
@@ -31,6 +32,17 @@ const fileStorageEngine = multer.diskStorage({
     }
 })
 
+const fileStorageEngine1 = multer.diskStorage({
+    destination: (req,file,cb)=>{
+        const dir = './public/assets/pimage'
+        cb(null,dir)
+    },
+    filename: (req,file,cb)=>{
+        cb(null,'image'+acount+'.svg')
+    }
+})
+
+const upload2 = multer({storage:fileStorageEngine1})
 const upload = multer({storage:fileStorageEngine})
 
 
@@ -60,6 +72,13 @@ router.post('/projects/:id',upload.single('image'), m.checkContent, async(req,re
 //     console.log(id);
 //     res.send('<h1>Upload project image</h1>')
 // })
+
+
+router.post('/addprojects',upload2.single('image'),(req,res)=>{
+    console.log(req.body,req.file);
+    console.log('in projects')
+    res.end()
+})
 
 
 module.exports= router;

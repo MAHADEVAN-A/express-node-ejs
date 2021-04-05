@@ -7,6 +7,12 @@ const dmodel = require('../models/datamodel')
 
 const fs = require('fs')
 
+let acount;
+const dir = './public/assets/bdetail/';
+fs.readdir(dir,(err,files)=>{
+    acount = files.length;
+    acount++;
+});
 
 var count4;
 const fileStorageEngine = multer.diskStorage({
@@ -25,6 +31,20 @@ const fileStorageEngine = multer.diskStorage({
     }
 })
 
+const fileStorageEngine1 = multer.diskStorage({
+    destination: (req,file,cb)=>{
+        fs.mkdir(`./public/assets/bdetail/images${acount}`,{recursive:true},(err)=>{
+            console.log(err)
+        })
+        const dir = `./public/assets/bdetail/images${acount}`
+        cb(null,dir)
+    },
+    filename: (req,file,cb)=>{
+        cb(null,file.originalname)
+    }
+})
+
+const upload2 = multer({storage:fileStorageEngine1})
 const upload = multer({storage:fileStorageEngine})
 
 router.post('/bdetail/:id/:i',upload.single('image'),async(req,res)=>{
@@ -43,6 +63,11 @@ router.post('/bdetail/:id/:i',upload.single('image'),async(req,res)=>{
         }
         res.status(500).json({ message: err.message })
     })
+})
+
+router.post('/addbdetail',upload2.array('images',3),(req,res)=>{
+    console.log(req.body,req.files);
+    res.end('hello')
 })
 
 
