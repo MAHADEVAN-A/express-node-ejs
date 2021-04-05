@@ -2,6 +2,7 @@ let projects = require('../data/projects.json')
 let blogs = require('../data/blogs.json')
 let pdetails = require('../data/pdetails/details.json');
 let bdetails = require('../data/bdetails/details.json');
+const fs = require('fs')
 const filename1 = './data/profile.json'
 const filename2 = './data/contact.json'
 const filename3 = './data/projects.json'
@@ -31,11 +32,11 @@ function updateProject(id,newPost) {
 })
 }
 
-function insertProject(newPost) {
+function insertProject(newPost,imagename) {
     return new Promise((resolve, reject) => {
-        const id = { id: helper.getNewId(projects) }
+        const id = { id: `${helper.getNewId(projects)}` }
         
-        newPost = { ...id, ...newPost }
+        newPost = { ...id, ...newPost,image:imagename }
         projects.push(newPost)
         helper.writeJSONFile(filename3, projects)
         resolve(projects)
@@ -56,11 +57,11 @@ function updateBlog(id,newPost) {
 })
 }
 
-function insertBlog(newPost) {
+function insertBlog(newPost,imagename) {
     return new Promise((resolve, reject) => {
-        const id = { id: helper.getNewId(blogs) }
+        const id = { id: `${helper.getNewId(blogs)}` }
         
-        newPost = { ...id, ...newPost }
+        newPost = { ...id, ...newPost,image:imagename }
         blogs.push(newPost)
         helper.writeJSONFile(filename4, blogs)
         resolve(blogs)
@@ -84,7 +85,9 @@ function updatePdetail(i,id,newPost) {
 
 function insertPdetail(newPost) {
     return new Promise((resolve, reject) => {
+        const id = { id: `${helper.getNewId(pdetails)}` }
         const detail = {
+            ...id,
             pdetails:[
                 {
                     id: "1",
@@ -123,7 +126,9 @@ function updateBdetail(i,id,newPost) {
 
 function insertBdetail(newPost) {
     return new Promise((resolve, reject) => {
+        const id = { id: `${helper.getNewId(bdetails)}` }
         const detail = {
+            ...id,
             bdetails:[
                 {
                     id: 1,
@@ -152,7 +157,77 @@ function updateContact(newPost) {
 })
 }
 
+function deleteProject(id,path1,path2) {
+    return new Promise((resolve, reject) => {
+        helper.mustBeInArray(projects, id)
+        .then(() => {
+            // const image = projects.filter(p => parseInt(p.id) == parseInt(id))
+            // const imagename = image.image
+            // fs.unlink(path1+'/'+imagename+'.svg',(err)=>{
+            //     if(err){
+            //         console.log(err);
+            //     }
+            //     console.log('file is deleted')
+            // })
+            projects = projects.filter(p => parseInt(p.id) !== parseInt(id))
+            console.log(projects,"madman")
+            helper.writeJSONFile(filename3, projects)
+            resolve(projects)
+        })
+        .catch(err => reject(err))
+        helper.mustBeInArray(pdetails, id)
+        .then(() => {
+            pdetails = pdetails.filter(p => parseInt(p.id) !== parseInt(id))
+            // console.log(pdetails)
+            // fs.unlink(path2+'/'+'images'+`${id}`,(err)=>{
+            //     if(err){
+            //         console.log(err);
+            //     }
+            //     console.log('file is deleted')
+            // })
+            helper.writeJSONFile(filename5, pdetails)
+            console.log(pdetails)
+        })
+        .catch(err => console.log(err))
+    })
+}
 
+
+function deleteBlog(id,path1,path2) {
+    return new Promise((resolve, reject) => {
+        helper.mustBeInArray(blogs, id)
+        .then(() => {
+            // const image = blogs.filter(p => parseInt(p.id) == parseInt(id))
+            // console.log(image,'devan')
+            // const imagename = image.image
+            // fs.unlink(path1+'/'+imagename+'.svg',(err)=>{
+            //     if(err){
+            //         console.log(err);
+            //     }
+            //     console.log('file is deleted')
+            // })
+            blogs = blogs.filter(p => parseInt(p.id) !== parseInt(id))
+            console.log(blogs)
+            helper.writeJSONFile(filename4, blogs)
+            resolve(blogs)
+        })
+        .catch(err => reject(err))
+        helper.mustBeInArray(bdetails, id)
+        .then(() => {
+            bdetails = bdetails.filter(p => parseInt(p.id) !== parseInt(id))
+            // console.log(bdetails)
+            // fs.unlink(path2+'/'+'images'+`${id}`,(err)=>{
+            //     if(err){
+            //         console.log(err);
+            //     }
+            //     console.log('file is deleted')
+            // })
+            helper.writeJSONFile(filename6, bdetails)
+            console.log(bdetails)
+        })
+        .catch(err => console.log(err))
+    })
+}
 
 module.exports = {
     updateProfile,
@@ -164,5 +239,7 @@ module.exports = {
     insertProject,
     insertBlog,
     insertPdetail,
-    insertBdetail
+    insertBdetail,
+    deleteProject,
+    deleteBlog
 }

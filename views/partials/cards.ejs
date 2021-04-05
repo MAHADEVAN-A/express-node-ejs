@@ -4,12 +4,13 @@
         <% for(var i=1;i<=count;i++){ %>
         <div class="cards">
             <div class="imge">
-                <img src="/assets/<%=image%>/image<%=i%>.svg"/>
+                <img src="/assets/<%=image%>/<%=cont[i-1].image%>.svg"/>
             </div>
             <div class="content">
                 <h2><%= cont[i-1].content %></h2>
-                <button data-modal-target="#modal<%=i%>">Edit</button>
-                <div class="modal" id="modal<%=i%>">
+                <button data-modal-target="#modal1<%=i%>">Edit</button>
+                <button class="deletebtn">Delete</button>
+                <div class="modal" id="modal1<%=i%>">
                     <div class="modal-header">
                         <div class="title">
                             Choose the file:
@@ -37,17 +38,24 @@
     </div>
 </div>
 <script>
-    var cards = document.getElementsByClassName('imge')
-    console.log(cards)
-     var count = '<%-count %>';
-     var detail = '<%-detail%>';
-     console.log(count,'maha')
-     for(var j=1;j<=count;j++){ 
+    var cards = document.getElementsByClassName('imge');
+    var butto = document.getElementsByClassName('deletebtn');
+    console.log(cards);
+     var count = '<%-count %>'
+     var detail = '<%-detail%>'
+     console.log(count,'maha');
+     for(let j=1;j<=count;j++){ 
          console.log(j,count);
-         const loca = `http://localhost:5000/${detail}/${j}`
+         const loca = `http://localhost:5000/${detail}/${j}`;
         cards[j-1].addEventListener('click',function(){
             window.location= loca;
-            console.log(j,'count')
+            console.log(j,'count');
+        })
+        var dele = '<%- delet%>'
+        
+        butto[j-1].addEventListener('click',()=>{
+            window.location= `http://localhost:5000/api/${dele}/${j}`;
         })
      }
+
 </script>

@@ -2,6 +2,7 @@ const express=require('express')
 const router = express.Router()
 const multer = require('multer')
 const app = express()
+const pdata = require('../data/projects.json')
 const dmodel = require('../models/datamodel')
 const m = require('../helpers/middlewares')
 
@@ -13,14 +14,15 @@ const fs = require('fs')
 // // parse json
 // app.use(express.json())
 let count,acount;
+count = pdata.length
 const dir = './public/assets/pimage';
 fs.readdir(dir,(err,files)=>{
-    count = files.length;
+    // count = files.length;
     acount = files.length;
     acount++;
     console.log(count)
 });
-
+let imagename 
 const fileStorageEngine = multer.diskStorage({
     destination: (req,file,cb)=>{
         cb(null,'./public/assets/pimage')
@@ -38,7 +40,8 @@ const fileStorageEngine1 = multer.diskStorage({
         cb(null,dir)
     },
     filename: (req,file,cb)=>{
-        cb(null,'image'+acount+'.svg')
+        imagename = 'image'+`${Date.now()}`
+        cb(null,imagename+'.svg')
     }
 })
 
@@ -53,7 +56,7 @@ router.post('/projects/:id',upload.single('image'), m.checkContent, async(req,re
     await dmodel.updateProject(req.params.id,req.body)
     .then(post =>{ 
         console.log(post)
-        res.render('eproject',{title:'projects',cont:post,count:count,image:'pimage',detail:'epdetail'})
+        res.render('eproject',{title:'projects',cont:post,count:count,image:'pimage',detail:'epdetail',delet:'pdelete'})
     })
     .catch(err => {
         if (err.status) {
@@ -78,7 +81,7 @@ router.post('/addprojects',upload2.single('image'),async(req,res)=>{
     console.log(req.body,req.file);
     console.log('in projects')
 
-    await dmodel.insertProject(req.body)
+    await dmodel.insertProject(req.body,imagename)
     .then(post =>{ 
         console.log(post)
     })

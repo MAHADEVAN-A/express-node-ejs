@@ -4,6 +4,7 @@ const multer = require('multer')
 const app = express()
 const dmodel = require('../models/datamodel')
 const m = require('../helpers/middlewares')
+const bdata = require('../data/blogs.json')
 
 // const app = express()
 const fs = require('fs')
@@ -12,10 +13,11 @@ const fs = require('fs')
 // app.use(express.urlencoded({ extended: false }))
 // // parse json
 // app.use(express.json())
-let count,acount;
+let count,acount,imagename;
+count = bdata.length
 const dir = './public/assets/bimage';
 fs.readdir(dir,(err,files)=>{
-    count = files.length;
+    // count = files.length;
     acount = files.length;
     acount++;
     console.log(count)
@@ -38,7 +40,8 @@ const fileStorageEngine1 = multer.diskStorage({
         cb(null,dir)
     },
     filename: (req,file,cb)=>{
-        cb(null,'image'+acount+'.svg')
+        imagename='image'+`${Date.now()}`
+        cb(null,imagename+'.svg')
     }
 })
 
@@ -53,7 +56,7 @@ router.post('/blogs/:id',upload.single('image'),async(req,res)=>{
     await dmodel.updateBlog(req.params.id,req.body)
     .then(post =>{ 
         console.log(post)
-        res.render('eblog',{title:'blogs',cont:post,count:count,image:'bimage',detail:'ebdetail'})
+        res.render('eblog',{title:'blogs',cont:post,count:count,image:'bimage',detail:'ebdetail',delet:'bdelete'})
     })
     .catch(err => {
         if (err.status) {
@@ -75,7 +78,7 @@ router.post('/blogs/:id',upload.single('image'),async(req,res)=>{
 
 router.post('/addblogs',upload2.single('image'),async(req,res)=>{
 
-    await dmodel.insertBlog(req.body)
+    await dmodel.insertBlog(req.body,imagename)
     .then(post =>{ 
         console.log(post)
     })

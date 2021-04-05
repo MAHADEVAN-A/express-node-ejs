@@ -16,16 +16,18 @@ app.use(express.static('./images'))
 
 app.use('/api',routes)
 var count1,count2,count3=3,count4=3;
-const dir1 = './public/assets/bimage'
-const dir2 = './public/assets/pimage'
+count1 = bdata.length
+count2 = pdata.length
+// const dir1 = './public/assets/bimage'
+// const dir2 = './public/assets/pimage'
 // const dir3 = './public/assets/pdetail'
 // const dir4 = './public/assets/bdetail'
-fs.readdir(dir1,(err,files)=>{
-     count1 = files.length
-})
-fs.readdir(dir2,(err,files)=>{
-    count2 = files.length
-})
+// fs.readdir(dir1,(err,files)=>{
+//      count1 = files.length
+// })
+// fs.readdir(dir2,(err,files)=>{
+//     count2 = files.length
+// })
 // fs.readdir(dir3,(err,files)=>{
 //     count3 = files.length
 // })
@@ -33,12 +35,15 @@ fs.readdir(dir2,(err,files)=>{
 //     count4 = files.length
 // })
 
+
+console.log('image'+`${Date.now()}`)
+
 app.get('/',(req,res)=>{
     res.render('index',{profileData:data})
 })
 
 app.get('/eproject',(req,res)=>{
-    res.render('eproject',{title:'projects',cont:pdata,count:count2,image:'pimage',detail:'epdetail'})
+    res.render('eproject',{title:'projects',cont:pdata,count:count2,image:'pimage',detail:'epdetail',delet:'pdelete'})
 })
 
 app.get('/epdetail/:id',(req,res)=>{
@@ -48,7 +53,7 @@ app.get('/epdetail/:id',(req,res)=>{
 })
 
 app.get('/eblog',(req,res)=>{
-    res.render('eblog',{title:'blogs',cont:bdata,count:count1,image:'bimage',detail:'ebdetail'})
+    res.render('eblog',{title:'blogs',cont:bdata,count:count1,image:'bimage',detail:'ebdetail',delet:'bdelete'})
 })
 // console.log(bdetails[0].bdetails)
 app.get('/ebdetail/:id',(req,res)=>{
