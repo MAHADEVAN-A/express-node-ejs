@@ -14,24 +14,25 @@ const fs = require('fs')
 // app.use(express.urlencoded({ extended: false }))
 // // parse json
 // app.use(express.json())
-var count,acount,imagename;
+var count,acount;
 count = bdata.length
 const dir = './public/assets/bimage';
 fs.readdir(dir,(err,files)=>{
-    // count = files.length;
     acount = files.length;
     acount++;
     console.log(count)
 });
-
+let imagename
 const fileStorageEngine = multer.diskStorage({
     destination: (req,file,cb)=>{
         cb(null,'./public/assets/bimage')
     },
     filename: (req,file,cb)=>{
         const id=req.params.id
-        console.log(id)
-        cb(null,'image'+id+'.svg')
+        const imag = bdata.filter(p => parseInt(p.id) == parseInt(id))
+        // console.log(imag,'mahad')
+        imagename = imag[0].image
+        cb(null,imagename+'.svg')
     }
 })
 
@@ -54,7 +55,7 @@ router.post('/blogs/:id',upload.single('image'),async(req,res)=>{
     console.log(req.params)
     console.log('helloworld');
 
-    await dmodel.updateBlog(req.params.id,req.body)
+    await dmodel.updateBlog(req.params.id,req.body,imagename)
     .then(post =>{ 
         console.log(post)
         count = bdata.length

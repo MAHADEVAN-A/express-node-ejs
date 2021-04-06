@@ -2,12 +2,19 @@ const express=require('express')
 const router = express.Router()
 const multer = require('multer')
 const dmodel = require('../models/datamodel')
+const pdata = require('../data/projects.json')
+const detailip = pdata.map(item => item.id)
+const ptitle = pdata.map(item => item.content)
 
 
 const fs = require('fs')
 
+var count;
+count = pdata.length
+
+
 let acount;
-const dir = './public/assets/bdetail/';
+const dir = './public/assets/pdetail/';
 fs.readdir(dir,(err,files)=>{
     acount = files.length;
     acount++;
@@ -28,7 +35,7 @@ const fileStorageEngine = multer.diskStorage({
         cb(null,'image'+id+'.svg')
     }
 })
-
+var jj = 1;
 const fileStorageEngine1 = multer.diskStorage({
     destination: (req,file,cb)=>{
         fs.mkdir(`./public/assets/pdetail/images${acount}`,{recursive:true},(err)=>{
@@ -38,7 +45,8 @@ const fileStorageEngine1 = multer.diskStorage({
         cb(null,dir)
     },
     filename: (req,file,cb)=>{
-        cb(null,file.originalname)
+        cb(null,`image${jj}.svg`)
+        jj++;
     }
 })
 
@@ -53,7 +61,7 @@ router.post('/pdetail/:id/:i',upload.single('image'),async(req,res)=>{
     await dmodel.updatePdetail(req.params.i,req.params.id,req.body)
     .then(post =>{ 
         console.log(post)
-        res.render('epdetail',{title:'pdetail',count:count3,image:'pdetail',id,details:post})
+        res.render('epdetail',{dtitle:ptitle[id-1],title:'pdetail',count:count3,image:'pdetail',id,details:post})
     })
     .catch(err => {
         if (err.status) {
@@ -72,6 +80,8 @@ router.post('/addpdetail',upload2.array('images',3),async(req,res)=>{
     await dmodel.insertPdetail(req.body)
     .then(post =>{ 
         console.log(post)
+        count = pdata.length
+        res.render('eproject',{title:'projects',cont:post,count:post.length,image:'pimage',detail:'epdetail',delet:'pdelete',detailid:detailip})
     })
     .catch(err => {
         if (err.status) {
@@ -79,7 +89,6 @@ router.post('/addpdetail',upload2.array('images',3),async(req,res)=>{
         }
         res.status(500).json({ message: err.message })
     })
-    res.end('hello')
 })
 
 

@@ -1,0 +1,12 @@
+<h1><%=dtitle%></h1>
+<% var count = count %>
+<% for(var i=1;i<=count;i++){ %>
+<div class="container" id="<%= title %><%=i%><%=i%><%=i%>">
+    <div class="content">
+        <h2><%= details[i-1].content %></h2>
+    </div>
+    <div class="imge">
+        <img src="/assets/<%=image%>/images<%=id%>/image<%=i%>.svg" alt="">
+    </div>
+</div>
+<% } %>

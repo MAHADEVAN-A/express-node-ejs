@@ -13,10 +13,12 @@ const bdetails = require('./data/bdetails/details.json')
 
 const app = express()
 const routes= require('./routes/index')
+const userRoutes= require('./routes/users/user')
 const ejs = require('ejs')
 app.set('view engine','ejs')
 app.use(express.static('./public'))
-app.use(express.static('./images'))
+
+app.use('/',userRoutes)
 
 app.use('/api',routes)
 var count1,count2,count3=3,count4=3;
@@ -50,7 +52,7 @@ console.log(ptitle)
 
 console.log('image'+`${Date.now()}`)
 
-app.get('/',(req,res)=>{
+app.get('/admin',(req,res)=>{
     res.render('index',{profileData:data})
 })
 

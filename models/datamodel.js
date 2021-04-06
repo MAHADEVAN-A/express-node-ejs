@@ -19,13 +19,16 @@ function updateProfile(newPost) {
 })
 }
 
-function updateProject(id,newPost) {
+function updateProject(id,newPost,imagename) {
     return new Promise((resolve, reject) => {
+        console.log(imagename,'mahad1');
         helper.mustBeInArray(projects, id)
         .then(post => {
             const index = projects.findIndex(p => p.id == post.id)
             id = { id: post.id }
-            projects[index] = { ...id, ...newPost }
+            const image = { image:imagename }
+            console.log(image,'mahad2')
+            projects[index] = { ...id, ...newPost, ...image }
             helper.writeJSONFile(filename3, projects)
             resolve(projects)
         })
@@ -44,13 +47,13 @@ function insertProject(newPost,imagename) {
     })
 }
 
-function updateBlog(id,newPost) {
+function updateBlog(id,newPost,imagename) {
     return new Promise((resolve, reject) => {
         helper.mustBeInArray(blogs, id)
         .then(post => {
             const index = blogs.findIndex(p => p.id == post.id)
             id = { id: post.id }
-            blogs[index] = { ...id, ...newPost }
+            blogs[index] = { ...id, ...newPost,image:imagename }
             helper.writeJSONFile(filename4, blogs)
             resolve(blogs)
         })
@@ -106,7 +109,7 @@ function insertPdetail(newPost) {
         }
         pdetails.push(detail)
         helper.writeJSONFile(filename5, pdetails)
-        resolve(pdetails)
+        resolve(projects)
     })
 }
 
@@ -147,7 +150,7 @@ function insertBdetail(newPost) {
         }
         bdetails.push(detail)
         helper.writeJSONFile(filename6, bdetails)
-        resolve(bdetails)
+        resolve(blogs)
     })
 }
 

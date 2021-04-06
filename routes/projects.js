@@ -29,8 +29,10 @@ const fileStorageEngine = multer.diskStorage({
     },
     filename: (req,file,cb)=>{
         const id=req.params.id
-        console.log(id)
-        cb(null,'image'+id+'.svg')
+        const imag = pdata.filter(p => parseInt(p.id) == parseInt(id))
+        console.log(imag,'mahad')
+        imagename = imag[0].image
+        cb(null,imagename+'.svg')
     }
 })
 
@@ -53,7 +55,7 @@ router.post('/projects/:id',upload.single('image'), m.checkContent, async(req,re
     console.log(req.params)
     console.log('helloworld');
 
-    await dmodel.updateProject(req.params.id,req.body)
+    await dmodel.updateProject(req.params.id,req.body,imagename)
     .then(post =>{ 
         console.log(post)
         count = pdata.length

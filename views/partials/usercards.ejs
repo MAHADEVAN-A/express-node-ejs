@@ -1,0 +1,34 @@
+<div class="projects">
+    <div class="container1">
+        <% var count = count %>
+        <% for(var i=1;i<=count;i++){ %>
+        <div class="cards">
+            <div class="imge">
+                <img src="/assets/<%=image%>/<%=cont[i-1].image%>.svg"/>
+            </div>
+            <div class="content">
+                <h2><%= cont[i-1].content %></h2>
+            </div>
+        </div>
+        <% } %>
+    </div>
+</div>
+<script>
+    var cards = document.getElementsByClassName('imge');
+    console.log(cards);
+     var count = '<%-count %>'
+     var detail = '<%-detail%>'
+     console.log(count,'maha');
+     var detailid = '<%-detailid%>'
+     const detaillid = detailid.split(',')
+     console.log(detaillid)
+     for(let j=0;j<count;j++){ 
+         console.log(j,count,detaillid[j],'devan');
+         let loca = `http://localhost:5000/${detail}/${detaillid[j]}`;
+        cards[j].addEventListener('click',function(){
+            window.location= loca;
+            console.log(j,'count');
+        })
+     }
+
+</script>

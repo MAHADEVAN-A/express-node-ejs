@@ -2,10 +2,15 @@ const express=require('express')
 const router = express.Router()
 const multer = require('multer')
 const dmodel = require('../models/datamodel')
+const bdata = require('../data/blogs.json')
+const detailib = bdata.map(item => item.id)
+const btitle = bdata.map(item => item.content)
 
 
 
 const fs = require('fs')
+var count;
+count = bdata.length
 
 let acount;
 const dir = './public/assets/bdetail/';
@@ -30,7 +35,7 @@ const fileStorageEngine = multer.diskStorage({
         cb(null,'image'+id+'.svg')
     }
 })
-
+var jj = 1;
 const fileStorageEngine1 = multer.diskStorage({
     destination: (req,file,cb)=>{
         fs.mkdir(`./public/assets/bdetail/images${acount}`,{recursive:true},(err)=>{
@@ -40,7 +45,8 @@ const fileStorageEngine1 = multer.diskStorage({
         cb(null,dir)
     },
     filename: (req,file,cb)=>{
-        cb(null,file.originalname)
+        cb(null,`image${jj}.svg`)
+        jj++;
     }
 })
 
@@ -55,7 +61,7 @@ router.post('/bdetail/:id/:i',upload.single('image'),async(req,res)=>{
     await dmodel.updateBdetail(req.params.i,req.params.id,req.body)
     .then(post =>{ 
         console.log(post)
-        res.render('ebdetail',{title:'bdetail',count:count4,image:'bdetail',id,details:post})
+        res.render('ebdetail',{dtitle:btitle[id-1],title:'bdetail',count:count4,image:'bdetail',id,details:post})
     })
     .catch(err => {
         if (err.status) {
@@ -71,6 +77,8 @@ router.post('/addbdetail',upload2.array('images',3),async(req,res)=>{
     await dmodel.insertBdetail(req.body)
     .then(post =>{ 
         console.log(post)
+        count = bdata.length
+        res.render('eblog',{title:'blogs',cont:post,count:post.length,image:'bimage',detail:'ebdetail',delet:'bdelete',detailid:detailib})
     })
     .catch(err => {
         if (err.status) {
@@ -78,7 +86,6 @@ router.post('/addbdetail',upload2.array('images',3),async(req,res)=>{
         }
         res.status(500).json({ message: err.message })
     })
-    res.end('hello')
 })
 
 

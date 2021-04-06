@@ -1,0 +1,16 @@
+<div class="navbar">
+    <div class="title">
+       <h2> <a href="/">devApp</a></h2>
+    </div>
+    <% var nlink=['/userproject','/userblog','/usercontact'] %>
+    <% var ntext=['project','blog','contact'] %>
+    <div class="menu">
+        <ul>
+            <%for(var i=0;i<3;i++){%>
+            <li>
+                <h2><a class="titill" href="<%=nlink[i]%>"><%=ntext[i]%></a></h2>
+            </li>
+            <%}%>
+        </ul>
+    </div>
+</div>
