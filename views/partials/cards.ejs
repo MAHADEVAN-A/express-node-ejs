@@ -44,17 +44,21 @@
      var count = '<%-count %>'
      var detail = '<%-detail%>'
      console.log(count,'maha');
-     for(let j=1;j<=count;j++){ 
-         console.log(j,count);
-         const loca = `http://localhost:5000/${detail}/${j}`;
-        cards[j-1].addEventListener('click',function(){
+     var detailid = '<%-detailid%>'
+     const detaillid = detailid.split(',')
+     console.log(detaillid)
+     for(let j=0;j<count;j++){ 
+         console.log(j,count,detaillid[j],'devan');
+         let loca = `http://localhost:5000/${detail}/${detaillid[j]}`;
+        cards[j].addEventListener('click',function(){
             window.location= loca;
             console.log(j,'count');
         })
         var dele = '<%- delet%>'
         
-        butto[j-1].addEventListener('click',()=>{
-            window.location= `http://localhost:5000/api/${dele}/${j}`;
+        butto[j].addEventListener('click',()=>{
+         console.log(j,count,detaillid[j],'de');  
+            window.location= `http://localhost:5000/api/${dele}/${detaillid[j]}`;
         })
      }
 

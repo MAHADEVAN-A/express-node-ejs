@@ -3,6 +3,7 @@ let blogs = require('../data/blogs.json')
 let pdetails = require('../data/pdetails/details.json');
 let bdetails = require('../data/bdetails/details.json');
 const fs = require('fs')
+const rimraf = require('rimraf')
 const filename1 = './data/profile.json'
 const filename2 = './data/contact.json'
 const filename3 = './data/projects.json'
@@ -161,14 +162,14 @@ function deleteProject(id,path1,path2) {
     return new Promise((resolve, reject) => {
         helper.mustBeInArray(projects, id)
         .then(() => {
-            // const image = projects.filter(p => parseInt(p.id) == parseInt(id))
-            // const imagename = image.image
-            // fs.unlink(path1+'/'+imagename+'.svg',(err)=>{
-            //     if(err){
-            //         console.log(err);
-            //     }
-            //     console.log('file is deleted')
-            // })
+            const imag = projects.filter(p => parseInt(p.id) == parseInt(id))
+            console.log(imag,'hara hara')
+            const imagename = imag[0].image
+            console.log(imagename,'siva siva')
+            fs.unlink(path1+'/'+imagename+'.svg',(err)=>{
+                console.log(err);
+            })
+            
             projects = projects.filter(p => parseInt(p.id) !== parseInt(id))
             console.log(projects,"madman")
             helper.writeJSONFile(filename3, projects)
@@ -177,14 +178,11 @@ function deleteProject(id,path1,path2) {
         .catch(err => reject(err))
         helper.mustBeInArray(pdetails, id)
         .then(() => {
+            console.log(path2+'/'+'images'+`${id}`,'pathof');
+            rimraf(path2+'/'+'images'+`${id}`,(err)=>{
+                console.log(err);
+            })
             pdetails = pdetails.filter(p => parseInt(p.id) !== parseInt(id))
-            // console.log(pdetails)
-            // fs.unlink(path2+'/'+'images'+`${id}`,(err)=>{
-            //     if(err){
-            //         console.log(err);
-            //     }
-            //     console.log('file is deleted')
-            // })
             helper.writeJSONFile(filename5, pdetails)
             console.log(pdetails)
         })
@@ -193,19 +191,26 @@ function deleteProject(id,path1,path2) {
 }
 
 
+
+// const fs = require('fs')
+// const rimraf = require('rimraf')
+// fs.unlink('./public/bimage/image1.svg',(err)=>{
+//     console.log(err);
+// })
+// rimraf('./public/pdetail/images1',(err)=>{
+//     console.log(err);
+// })
+
 function deleteBlog(id,path1,path2) {
     return new Promise((resolve, reject) => {
         helper.mustBeInArray(blogs, id)
         .then(() => {
-            // const image = blogs.filter(p => parseInt(p.id) == parseInt(id))
+            const image = blogs.filter(p => parseInt(p.id) == parseInt(id))
             // console.log(image,'devan')
-            // const imagename = image.image
-            // fs.unlink(path1+'/'+imagename+'.svg',(err)=>{
-            //     if(err){
-            //         console.log(err);
-            //     }
-            //     console.log('file is deleted')
-            // })
+            const imagename = image[0].image
+            fs.unlink(path1+'/'+imagename+'.svg',(err)=>{
+                console.log(err);
+            })
             blogs = blogs.filter(p => parseInt(p.id) !== parseInt(id))
             console.log(blogs)
             helper.writeJSONFile(filename4, blogs)
@@ -214,14 +219,11 @@ function deleteBlog(id,path1,path2) {
         .catch(err => reject(err))
         helper.mustBeInArray(bdetails, id)
         .then(() => {
+            console.log(path2+'/'+'images'+`${id}`,'pathof');
+            rimraf(path2+'/'+'images'+`${id}`,(err)=>{
+                console.log(err);
+            })
             bdetails = bdetails.filter(p => parseInt(p.id) !== parseInt(id))
-            // console.log(bdetails)
-            // fs.unlink(path2+'/'+'images'+`${id}`,(err)=>{
-            //     if(err){
-            //         console.log(err);
-            //     }
-            //     console.log('file is deleted')
-            // })
             helper.writeJSONFile(filename6, bdetails)
             console.log(bdetails)
         })
@@ -243,3 +245,5 @@ module.exports = {
     deleteProject,
     deleteBlog
 }
+
+

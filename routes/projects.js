@@ -5,6 +5,7 @@ const app = express()
 const pdata = require('../data/projects.json')
 const dmodel = require('../models/datamodel')
 const m = require('../helpers/middlewares')
+const detailip = pdata.map(item => item.id)
 
 // const app = express()
 const fs = require('fs')
@@ -13,11 +14,10 @@ const fs = require('fs')
 // app.use(express.urlencoded({ extended: false }))
 // // parse json
 // app.use(express.json())
-let count,acount;
+var count,acount;
 count = pdata.length
 const dir = './public/assets/pimage';
 fs.readdir(dir,(err,files)=>{
-    // count = files.length;
     acount = files.length;
     acount++;
     console.log(count)
@@ -56,7 +56,8 @@ router.post('/projects/:id',upload.single('image'), m.checkContent, async(req,re
     await dmodel.updateProject(req.params.id,req.body)
     .then(post =>{ 
         console.log(post)
-        res.render('eproject',{title:'projects',cont:post,count:count,image:'pimage',detail:'epdetail',delet:'pdelete'})
+        count = pdata.length
+        res.render('eproject',{title:'projects',cont:post,count:count,image:'pimage',detail:'epdetail',delet:'pdelete',detailid:detailip})
     })
     .catch(err => {
         if (err.status) {
@@ -82,8 +83,9 @@ router.post('/addprojects',upload2.single('image'),async(req,res)=>{
     console.log('in projects')
 
     await dmodel.insertProject(req.body,imagename)
-    .then(post =>{ 
-        console.log(post)
+    .then(() =>{ 
+        count = pdata.length
+        res.render('eproject',{title:'projects',cont:pdata,count:count,image:'pimage',detail:'epdetail',delet:'pdelete',detailid:detailip})
     })
     .catch(err => {
         if (err.status) {

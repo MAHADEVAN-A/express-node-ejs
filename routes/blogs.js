@@ -5,6 +5,7 @@ const app = express()
 const dmodel = require('../models/datamodel')
 const m = require('../helpers/middlewares')
 const bdata = require('../data/blogs.json')
+const detailib = bdata.map(item => item.id)
 
 // const app = express()
 const fs = require('fs')
@@ -13,7 +14,7 @@ const fs = require('fs')
 // app.use(express.urlencoded({ extended: false }))
 // // parse json
 // app.use(express.json())
-let count,acount,imagename;
+var count,acount,imagename;
 count = bdata.length
 const dir = './public/assets/bimage';
 fs.readdir(dir,(err,files)=>{
@@ -56,7 +57,8 @@ router.post('/blogs/:id',upload.single('image'),async(req,res)=>{
     await dmodel.updateBlog(req.params.id,req.body)
     .then(post =>{ 
         console.log(post)
-        res.render('eblog',{title:'blogs',cont:post,count:count,image:'bimage',detail:'ebdetail',delet:'bdelete'})
+        count = bdata.length
+        res.render('eblog',{title:'blogs',cont:post,count:count,image:'bimage',detail:'ebdetail',delet:'bdelete',detailid:detailib})
     })
     .catch(err => {
         if (err.status) {
@@ -81,6 +83,8 @@ router.post('/addblogs',upload2.single('image'),async(req,res)=>{
     await dmodel.insertBlog(req.body,imagename)
     .then(post =>{ 
         console.log(post)
+        count = bdata.length
+        res.render('eblog',{title:'blogs',cont:post,count:count,image:'bimage',detail:'ebdetail',delet:'bdelete',detailid:detailib})
     })
     .catch(err => {
         if (err.status) {
@@ -89,8 +93,6 @@ router.post('/addblogs',upload2.single('image'),async(req,res)=>{
         res.status(500).json({ message: err.message })
     })   
 
-    console.log(req.body,req.file);
-    res.end()
 })
 
 module.exports= router;

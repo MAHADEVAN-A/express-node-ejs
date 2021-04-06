@@ -3,11 +3,12 @@ const router = express.Router()
 const dmodel = require('../models/datamodel')
 const bdata = require('../data/blogs.json')
 const fs = require('fs')
+const detailib = bdata.map(item => item.id)
 
-let count;
+var count;
 const dir1 = './public/assets/bimage';
 const dir2 = './public/assets/bdetail';
-count = bdata.length
+
 // fs.readdir(dir1,(err,files)=>{
 //     count = files.length;
 //     // console.log(count)
@@ -16,7 +17,8 @@ count = bdata.length
 router.get('/bdelete/:id',async(req,res)=>{
     await dmodel.deleteBlog(req.params.id,dir1,dir2)
     .then(post =>{ 
-        res.render('eblog',{title:'blogs',cont:post,count:count,image:'bimage',detail:'ebdetail',delet:'bdelete'})
+        count = bdata.length
+        res.render('eblog',{title:'blogs',cont:bdata,count:count,image:'bimage',detail:'ebdetail',delet:'bdelete',detailid:detailib})
     })
     .catch(err => {
         if (err.status) {
