@@ -1,11 +1,16 @@
 const express = require('express')
 const router = express.Router()
 const dmodel = require('../models/datamodel')
-const pdata = require('../data/projects.json')
 const fs = require('fs')
-const detailip = pdata.map(item => item.id)
 
-var count;
+let pdata,detailip
+const middleware = (req,res,next)=>{
+pdata = require('../data/projects.json')
+detailip = pdata.map(item => item.id)
+next()
+}
+
+// var count;
 const dir1 = './public/assets/pimage';
 const dir2 = './public/assets/pdetail';
 
@@ -14,7 +19,7 @@ const dir2 = './public/assets/pdetail';
 //     // console.log(count)
 // });
 
-router.get('/pdelete/:id',async(req,res)=>{
+router.get('/pdelete/:id',middleware,async(req,res)=>{
 
     await dmodel.deleteProject(req.params.id,dir1,dir2)
     .then(post =>{ 

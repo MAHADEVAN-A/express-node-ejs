@@ -1,16 +1,16 @@
 <div class="projects">
     <div class="container1">
         <% var count = count %>
-        <% for(var i=1;i<=count;i++){ %>
+        <% cont.forEach((item)=>{ %>
         <div class="cards">
             <div class="imge">
-                <img src="/assets/<%=image%>/<%=cont[i-1].image%>.svg"/>
+                <img src="/assets/<%=image%>/<%=item.image%>.svg"/>
             </div>
             <div class="content">
-                <h2><%= cont[i-1].content %></h2>
-                <button data-modal-target="#modal1<%=i%>">Edit</button>
+                <h2><%= item.content %></h2>
+                <button data-modal-target="#modal1<%=item.id%>">Edit</button>
                 <button class="deletebtn">Delete</button>
-                <div class="modal" id="modal1<%=i%>">
+                <div class="modal" id="modal1<%=item.id%>">
                     <div class="modal-header">
                         <div class="title">
                             Choose the file:
@@ -20,11 +20,11 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <form id="<%= title %><%=i%>" action="/api/<%= title %>/<%=i%>" method="POST" enctype="multipart/form-data">
+                        <form id="<%= title %><%=item.id%>" action="/api/<%= title %>/<%=item.id%>" method="POST" enctype="multipart/form-data">
                             <label for="content"><h2>Enter the content:</h2></label>
                             <input type="text" name="content">
                             <input type="file" name="image">
-                            <button class="<%= title %><%=i%><%=i%>" form="<%= title %><%=i%>" type="submit">SEND</button>
+                            <button class="<%= title %><%=item.id%><%=item.id%>" form="<%= title %><%=item.id%>" type="submit">SEND</button>
                         </form>
                     </div>
                 </div>
@@ -33,7 +33,7 @@
                 </div>
             </div>
         </div>
-        <% } %>
+        <% }) %>
         
     </div>
 </div>
@@ -49,7 +49,7 @@
      console.log(detaillid)
      for(let j=0;j<count;j++){ 
          console.log(j,count,detaillid[j],'devan');
-         let loca = `http://localhost:5000/${detail}/${detaillid[j]}`;
+         let loca = `http://localhost:5000/${detail}/${j+1}`;
         cards[j].addEventListener('click',function(){
             window.location= loca;
             console.log(j,'count');

@@ -1,16 +1,16 @@
 <div class="projects">
     <div class="container1">
         <% var count = count %>
-        <% for(var i=1;i<=count;i++){ %>
+        <% cont.forEach((item)=>{ %>
         <div class="cards">
             <div class="imge">
-                <img src="/assets/<%=image%>/<%=cont[i-1].image%>.svg"/>
+                <img src="/assets/<%=image%>/<%=item.image%>.svg"/>
             </div>
             <div class="content">
-                <h2><%= cont[i-1].content %></h2>
+                <h2><%= item.content %></h2>
             </div>
         </div>
-        <% } %>
+        <% }) %>
     </div>
 </div>
 <script>
@@ -24,7 +24,7 @@
      console.log(detaillid)
      for(let j=0;j<count;j++){ 
          console.log(j,count,detaillid[j],'devan');
-         let loca = `http://localhost:5000/${detail}/${detaillid[j]}`;
+         let loca = `http://localhost:5000/${detail}/${j+1}`;
         cards[j].addEventListener('click',function(){
             window.location= loca;
             console.log(j,'count');

@@ -1,20 +1,23 @@
 const express = require('express')
 const router = express.Router()
-const dmodel = require('../models/datamodel')
-const bdata = require('../data/blogs.json')
 const fs = require('fs')
-const detailib = bdata.map(item => item.id)
+const dmodel = require('../models/datamodel')
 
-var count;
-const dir1 = './public/assets/bimage';
-const dir2 = './public/assets/bdetail';
+let dir1,dir2,count,bdata,detailib;
 
+const middleware = (req,res,next)=>{
+bdata = require('../data/blogs.json')
+detailib = bdata.map(item => item.id)
+dir1 = './public/assets/bimage';
+dir2 = './public/assets/bdetail';
+next()
+}
 // fs.readdir(dir1,(err,files)=>{
 //     count = files.length;
 //     // console.log(count)
 // });
 
-router.get('/bdelete/:id',async(req,res)=>{
+router.get('/bdelete/:id',middleware,async(req,res)=>{
     await dmodel.deleteBlog(req.params.id,dir1,dir2)
     .then(post =>{ 
         count = bdata.length

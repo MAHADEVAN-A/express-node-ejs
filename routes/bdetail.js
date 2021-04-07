@@ -1,23 +1,28 @@
 const express=require('express')
 const router = express.Router()
 const multer = require('multer')
-const dmodel = require('../models/datamodel')
-const bdata = require('../data/blogs.json')
-const detailib = bdata.map(item => item.id)
-const btitle = bdata.map(item => item.content)
-
-
-
 const fs = require('fs')
-var count;
-count = bdata.length
+const dmodel = require('../models/datamodel')
+const helper = require('../helpers/helper.js')
 
-let acount;
+
+
+let acount,bdata,detailib,btitle,files,bdetails;
+var count;
 const dir = './public/assets/bdetail/';
-fs.readdir(dir,(err,files)=>{
-    acount = files.length;
-    acount++;
-});
+
+const middleware = (req,res,next)=>{
+bdetails = require('../data/bdetails/details.json');
+bdata = require('../data/blogs.json')
+detailib = bdata.map(item => item.id)
+btitle = bdata.map(item => item.content)
+count = bdata.length
+files=fs.readdirSync(dir)
+acount = files.length;
+acount++;
+next()
+}
+
 
 var count4;
 const fileStorageEngine = multer.diskStorage({
@@ -36,12 +41,15 @@ const fileStorageEngine = multer.diskStorage({
     }
 })
 var jj = 1;
+let imagesname,iid
 const fileStorageEngine1 = multer.diskStorage({
     destination: (req,file,cb)=>{
-        fs.mkdir(`./public/assets/bdetail/images${acount}`,{recursive:true},(err)=>{
+        iid = helper.getNewId(bdetails)
+        imagesname=`images${iid}`
+        fs.mkdir(`./public/assets/bdetail/images${iid}`,{recursive:true},(err)=>{
             console.log(err)
         })
-        const dir = `./public/assets/bdetail/images${acount}`
+        const dir = `./public/assets/bdetail/images${iid}`
         cb(null,dir)
     },
     filename: (req,file,cb)=>{
@@ -53,7 +61,7 @@ const fileStorageEngine1 = multer.diskStorage({
 const upload2 = multer({storage:fileStorageEngine1})
 const upload = multer({storage:fileStorageEngine})
 
-router.post('/bdetail/:id/:i',upload.single('image'),async(req,res)=>{
+router.post('/bdetail/:id/:i',middleware,upload.single('image'),async(req,res)=>{
     console.log(req.params)
     console.log('helloworld');
     let id = req.params.id
@@ -71,10 +79,10 @@ router.post('/bdetail/:id/:i',upload.single('image'),async(req,res)=>{
     })
 })
 
-router.post('/addbdetail',upload2.array('images',3),async(req,res)=>{
+router.post('/addbdetail',middleware,upload2.array('images',3),async(req,res)=>{
     console.log(req.body,req.files);
 
-    await dmodel.insertBdetail(req.body)
+    await dmodel.insertBdetail(req.body,imagesname)
     .then(post =>{ 
         console.log(post)
         count = bdata.length

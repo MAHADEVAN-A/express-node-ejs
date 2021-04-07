@@ -87,11 +87,12 @@ function updatePdetail(i,id,newPost) {
 }
 
 
-function insertPdetail(newPost) {
+function insertPdetail(newPost,imagesname) {
     return new Promise((resolve, reject) => {
         const id = { id: `${helper.getNewId(pdetails)}` }
         const detail = {
             ...id,
+            images:imagesname,
             pdetails:[
                 {
                     id: "1",
@@ -128,11 +129,12 @@ function updateBdetail(i,id,newPost) {
 })
 }
 
-function insertBdetail(newPost) {
+function insertBdetail(newPost,imagesname) {
     return new Promise((resolve, reject) => {
         const id = { id: `${helper.getNewId(bdetails)}` }
         const detail = {
             ...id,
+            images:imagesname,
             bdetails:[
                 {
                     id: 1,

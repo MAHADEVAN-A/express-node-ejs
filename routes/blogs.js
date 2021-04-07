@@ -1,11 +1,9 @@
 const express=require('express')
 const router = express.Router()
 const multer = require('multer')
-const app = express()
+// const app = express()
+// const m = require('../helpers/middlewares')
 const dmodel = require('../models/datamodel')
-const m = require('../helpers/middlewares')
-const bdata = require('../data/blogs.json')
-const detailib = bdata.map(item => item.id)
 
 // const app = express()
 const fs = require('fs')
@@ -15,13 +13,20 @@ const fs = require('fs')
 // // parse json
 // app.use(express.json())
 var count,acount;
-count = bdata.length
+let bdata,detailib,filese;
 const dir = './public/assets/bimage';
-fs.readdir(dir,(err,files)=>{
-    acount = files.length;
-    acount++;
-    console.log(count)
-});
+
+const middleware = (req,res,next)=>{
+bdata = require('../data/blogs.json')
+detailib = bdata.map(item => item.id)
+count = bdata.length
+files=fs.readdirSync(dir)
+acount = files.length;
+acount++;
+next()
+}
+
+
 let imagename
 const fileStorageEngine = multer.diskStorage({
     destination: (req,file,cb)=>{
@@ -51,7 +56,7 @@ const upload2 = multer({storage:fileStorageEngine1})
 const upload = multer({storage:fileStorageEngine})
 
 
-router.post('/blogs/:id',upload.single('image'),async(req,res)=>{
+router.post('/blogs/:id',middleware,upload.single('image'),async(req,res)=>{
     console.log(req.params)
     console.log('helloworld');
 
@@ -79,7 +84,7 @@ router.post('/blogs/:id',upload.single('image'),async(req,res)=>{
 //     res.send('<h1>Upload project image</h1>')
 // })
 
-router.post('/addblogs',upload2.single('image'),async(req,res)=>{
+router.post('/addblogs',middleware,upload2.single('image'),async(req,res)=>{
 
     await dmodel.insertBlog(req.body,imagename)
     .then(post =>{ 

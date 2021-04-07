@@ -1,11 +1,9 @@
 const express=require('express')
 const router = express.Router()
 const multer = require('multer')
-const app = express()
-const pdata = require('../data/projects.json')
 const dmodel = require('../models/datamodel')
 const m = require('../helpers/middlewares')
-const detailip = pdata.map(item => item.id)
+// const app = express()
 
 // const app = express()
 const fs = require('fs')
@@ -14,14 +12,21 @@ const fs = require('fs')
 // app.use(express.urlencoded({ extended: false }))
 // // parse json
 // app.use(express.json())
-var count,acount;
-count = pdata.length
 const dir = './public/assets/pimage';
-fs.readdir(dir,(err,files)=>{
-    acount = files.length;
-    acount++;
-    console.log(count)
-});
+let pdata,detailip,acount,files;
+var count;
+
+const middleware = (req,res,next)=>{
+pdata = require('../data/projects.json')
+detailip = pdata.map(item => item.id)
+count = pdata.length
+files= fs.readdirSync(dir)
+acount = files.length;
+acount++;
+next()
+}
+
+
 let imagename 
 const fileStorageEngine = multer.diskStorage({
     destination: (req,file,cb)=>{
@@ -51,7 +56,7 @@ const upload2 = multer({storage:fileStorageEngine1})
 const upload = multer({storage:fileStorageEngine})
 
 
-router.post('/projects/:id',upload.single('image'), m.checkContent, async(req,res)=>{
+router.post('/projects/:id',middleware,upload.single('image'), m.checkContent, async(req,res)=>{
     console.log(req.params)
     console.log('helloworld');
 
@@ -80,7 +85,7 @@ router.post('/projects/:id',upload.single('image'), m.checkContent, async(req,re
 // })
 
 
-router.post('/addprojects',upload2.single('image'),async(req,res)=>{
+router.post('/addprojects',middleware,upload2.single('image'),async(req,res)=>{
     console.log(req.body,req.file);
     console.log('in projects')
 
