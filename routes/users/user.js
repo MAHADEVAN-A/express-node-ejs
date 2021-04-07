@@ -1,17 +1,17 @@
 const express = require('express')
 const router = express.Router()
 
-let data = require('../../data/profile.json')
-let cdata = require('../../data/contact.json')
-let pdata = require('../../data/projects.json')
-let bdata = require('../../data/blogs.json')
-let pdetails = require('../../data/pdetails/details.json')
-let bdetails = require('../../data/bdetails/details.json')
 
 const fs = require('fs')
-let count1,count2,count3,count4,detailip,detailib,ptitle,btitle;
-const middlewarefunctions = (req,res,next)=>{
+let data,cdata,pdata,bdata,pdetails,bdetails,count1,count2,count3,count4,detailip,detailib,ptitle,btitle;
+const middlewarefunctions = async(req,res,next)=>{
 
+data = await JSON.parse(fs.readFileSync('./data/profile.json'))
+cdata = await JSON.parse(fs.readFileSync('./data/contact.json'))
+pdata = await JSON.parse(fs.readFileSync('./data/projects.json'))
+bdata = await JSON.parse(fs.readFileSync('./data/blogs.json'))
+pdetails = await JSON.parse(fs.readFileSync('./data/pdetails/details.json'))
+bdetails = await JSON.parse(fs.readFileSync('./data/bdetails/details.json'))
 count3=3,count4=3;
 count1 = bdata.length
 count2 = pdata.length

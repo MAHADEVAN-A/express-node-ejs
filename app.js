@@ -13,18 +13,19 @@ app.set('view engine','ejs')
 app.use(express.static('./public'))
 app.use('/',userRoutes)
 
-let data = require('./data/profile.json')
-let pdata = require('./data/projects.json')
-let cdata = require('./data/contact.json')
-let bdata = require('./data/blogs.json')
-let pdetails = require('./data/pdetails/details.json')
-let bdetails = require('./data/bdetails/details.json')
 
 app.use('/api',routes)
 
-let count1,count2,count3,count4,detailip,detailib,btitle,ptitle;
+let data,pdata,cdata,bdata,pdetails,bdetails,count1,count2,count3,count4,detailip,detailib,btitle,ptitle;
 
-const middlewareFunctions = (req,res,next)=>{
+const middlewareFunctions = async(req,res,next)=>{
+data = await JSON.parse(fs.readFileSync('./data/profile.json'))
+pdata = await JSON.parse(fs.readFileSync('./data/projects.json'))
+cdata = await JSON.parse(fs.readFileSync('./data/contact.json'))
+bdata = await JSON.parse(fs.readFileSync('./data/blogs.json'))
+pdetails = await JSON.parse(fs.readFileSync('./data/pdetails/details.json'))
+bdetails = await JSON.parse(fs.readFileSync('./data/bdetails/details.json'))
+
 detailip = pdata.map(item => item.id)
 detailib = bdata.map(item => item.id)
 // console.log(detailip);
