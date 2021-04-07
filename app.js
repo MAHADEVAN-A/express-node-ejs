@@ -60,7 +60,7 @@ next()
 
 console.log('image'+`${Date.now()}`)
 
-app.get('/admin',middlewareFunctions,(req,res)=>{
+app.get('/admiin',middlewareFunctions,(req,res)=>{
     res.render('index',{profileData:data})
 })
 
