@@ -11,18 +11,20 @@ const userRoutes= require('./routes/users/user')
 const ejs = require('ejs')
 app.set('view engine','ejs')
 app.use(express.static('./public'))
-
 app.use('/',userRoutes)
 
+let data = require('./data/profile.json')
+let pdata = require('./data/projects.json')
+let cdata = require('./data/contact.json')
+let bdata = require('./data/blogs.json')
+let pdetails = require('./data/pdetails/details.json')
+let bdetails = require('./data/bdetails/details.json')
+
 app.use('/api',routes)
-var count1,count2,count3,count4,data,cdata,pdata,bdata,pdetails,bdetails,detailip,detailib,btitle,ptitle;
+
+let count1,count2,count3,count4,detailip,detailib,btitle,ptitle;
+
 const middlewareFunctions = (req,res,next)=>{
-data = require('./data/profile.json')
-cdata = require('./data/contact.json')
-pdata = require('./data/projects.json')
-bdata = require('./data/blogs.json')
-pdetails = require('./data/pdetails/details.json')
-bdetails = require('./data/bdetails/details.json')
 detailip = pdata.map(item => item.id)
 detailib = bdata.map(item => item.id)
 // console.log(detailip);
@@ -35,6 +37,8 @@ count2 = pdata.length
 // console.log(ptitle)
 next()
 }
+
+
 // const dir1 = './public/assets/bimage'
 // const dir2 = './public/assets/pimage'
 // const dir3 = './public/assets/pdetail'

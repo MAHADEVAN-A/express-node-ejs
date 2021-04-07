@@ -1,7 +1,7 @@
 <div class="projects">
     <div class="container1">
         <% var count = count %>
-        <% cont.forEach((item)=>{ %>
+        <% contt.forEach((item)=>{ %>
         <div class="cards">
             <div class="imge">
                 <img src="/assets/<%=image%>/<%=item.image%>.svg"/>
@@ -24,7 +24,7 @@
      console.log(detaillid)
      for(let j=0;j<count;j++){ 
          console.log(j,count,detaillid[j],'devan');
-         let loca = `https://mahadevan.herokuapp.com/${detail}/${j+1}`;
+         let loca = `http://localhost:5000/${detail}/${j+1}`;
         cards[j].addEventListener('click',function(){
             window.location= loca;
             console.log(j,'count');

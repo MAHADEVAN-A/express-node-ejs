@@ -20,6 +20,7 @@ next()
 router.get('/bdelete/:id',middleware,async(req,res)=>{
     await dmodel.deleteBlog(req.params.id,dir1,dir2)
     .then(post =>{ 
+        bdata = post
         count = bdata.length
         res.render('eblog',{title:'blogs',cont:post,count:post.length,image:'bimage',detail:'ebdetail',delet:'bdelete',detailid:detailib})
     })

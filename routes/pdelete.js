@@ -24,6 +24,7 @@ router.get('/pdelete/:id',middleware,async(req,res)=>{
     await dmodel.deleteProject(req.params.id,dir1,dir2)
     .then(post =>{ 
         console.log(post,'madman2')
+        pdata = post;
         res.render('eproject',{title:'projects',cont:post,count:post.length,image:'pimage',detail:'epdetail',delet:'pdelete',detailid:detailip})
     })
     .catch(err => {

@@ -1,15 +1,16 @@
 const express = require('express')
 const router = express.Router()
 
+let data = require('../../data/profile.json')
+let cdata = require('../../data/contact.json')
+let pdata = require('../../data/projects.json')
+let bdata = require('../../data/blogs.json')
+let pdetails = require('../../data/pdetails/details.json')
+let bdetails = require('../../data/bdetails/details.json')
+
 const fs = require('fs')
-var data,cdata,pdata,bdata,pdetails,bdetails,count1,count2,count3,count4,detailip,detailib,ptitle,btitle;
+let count1,count2,count3,count4,detailip,detailib,ptitle,btitle;
 const middlewarefunctions = (req,res,next)=>{
-data = require('../../data/profile.json')
-cdata = require('../../data/contact.json')
-pdata = require('../../data/projects.json')
-bdata = require('../../data/blogs.json')
-pdetails = require('../../data/pdetails/details.json')
-bdetails = require('../../data/bdetails/details.json')
 
 count3=3,count4=3;
 count1 = bdata.length
@@ -27,7 +28,7 @@ router.get('/',middlewarefunctions,(req,res)=>{
 })
 
 router.get('/userproject',middlewarefunctions,(req,res)=>{
-    res.render('userproject',{title:'projects',cont:pdata,count:count2,image:'pimage',detail:'userpdetail',detailid:detailip})
+    res.render('userproject',{title:'projects',contt:pdata,count:count2,image:'pimage',detail:'userpdetail',detailid:detailip})
 })
 
 router.get('/userpdetail/:id',middlewarefunctions,(req,res)=>{
@@ -36,7 +37,7 @@ router.get('/userpdetail/:id',middlewarefunctions,(req,res)=>{
 })
 
 router.get('/userblog',middlewarefunctions,(req,res)=>{
-    res.render('userblog',{title:'blogs',cont:bdata,count:count1,image:'bimage',detail:'userbdetail',detailid:detailib})
+    res.render('userblog',{title:'blogs',contt:bdata,count:count1,image:'bimage',detail:'userbdetail',detailid:detailib})
 })
 
 router.get('/userbdetail/:id',middlewarefunctions,(req,res)=>{

@@ -14,10 +14,10 @@ const fs = require('fs')
 // app.use(express.json())
 const dir = './public/assets/pimage';
 let pdata,detailip,acount,files;
+pdata = require('../data/projects.json')
 var count;
 
 const middleware = (req,res,next)=>{
-pdata = require('../data/projects.json')
 detailip = pdata.map(item => item.id)
 count = pdata.length
 files= fs.readdirSync(dir)
@@ -90,9 +90,8 @@ router.post('/addprojects',middleware,upload2.single('image'),async(req,res)=>{
     console.log('in projects')
 
     await dmodel.insertProject(req.body,imagename)
-    .then(() =>{ 
-        count = pdata.length
-        res.render('eproject',{title:'projects',cont:pdata,count:count,image:'pimage',detail:'epdetail',delet:'pdelete',detailid:detailip})
+    .then((post) =>{ 
+        res.render('eproject',{title:'projects',cont:post,count:post.length,image:'pimage',detail:'epdetail',delet:'pdelete',detailid:detailip})
     })
     .catch(err => {
         if (err.status) {

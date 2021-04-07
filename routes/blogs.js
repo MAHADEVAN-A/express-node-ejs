@@ -90,7 +90,7 @@ router.post('/addblogs',middleware,upload2.single('image'),async(req,res)=>{
     .then(post =>{ 
         console.log(post)
         count = bdata.length
-        res.render('eblog',{title:'blogs',cont:post,count:count,image:'bimage',detail:'ebdetail',delet:'bdelete',detailid:detailib})
+        res.render('eblog',{title:'blogs',cont:post,count:post.length,image:'bimage',detail:'ebdetail',delet:'bdelete',detailid:detailib})
     })
     .catch(err => {
         if (err.status) {

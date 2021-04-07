@@ -3,18 +3,18 @@ const router = express.Router()
 const multer = require('multer')
 const dmodel = require('../models/datamodel')
 const helper = require('../helpers/helper.js')
+let pdetails = require('../data/pdetails/details.json');
+let pdata = require('../data/projects.json')
 
 
 
 const fs = require('fs')
 
 var count;
-let acount,pdata,detailip,ptitle,files,pdetails;
+let acount,detailip,ptitle,files;
 const dir = './public/assets/pdetail/';
 
 const middleware = (req,res,next)=>{
-pdetails = require('../data/pdetails/details.json');
-pdata = require('../data/projects.json')
 detailip = pdata.map(item => item.id)
 ptitle = pdata.map(item => item.content)
 count = pdata.length
@@ -88,7 +88,6 @@ router.post('/addpdetail',middleware,upload2.array('images',3),async(req,res)=>{
     await dmodel.insertPdetail(req.body,imagesname)
     .then(post =>{ 
         console.log(post)
-        count = pdata.length
         res.render('eproject',{title:'projects',cont:post,count:post.length,image:'pimage',detail:'epdetail',delet:'pdelete',detailid:detailip})
     })
     .catch(err => {
