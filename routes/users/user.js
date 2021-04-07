@@ -2,7 +2,7 @@ const express = require('express')
 const router = express.Router()
 
 const fs = require('fs')
-let data,cdata,pdata,bdata,pdetails,bdetails,count1,count2,count3,count4,detailip,detailib,ptitle,btitle;
+var data,cdata,pdata,bdata,pdetails,bdetails,count1,count2,count3,count4,detailip,detailib,ptitle,btitle;
 const middlewarefunctions = (req,res,next)=>{
 data = require('../../data/profile.json')
 cdata = require('../../data/contact.json')
