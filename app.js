@@ -15,7 +15,7 @@ app.use(express.static('./public'))
 app.use('/',userRoutes)
 
 app.use('/api',routes)
-let count1,count2,count3,count4,data,cdata,pdata,bdata,pdetails,bdetails,detailip,detailib,btitle,ptitle;
+var count1,count2,count3,count4,data,cdata,pdata,bdata,pdetails,bdetails,detailip,detailib,btitle,ptitle;
 const middlewareFunctions = (req,res,next)=>{
 data = require('./data/profile.json')
 cdata = require('./data/contact.json')
