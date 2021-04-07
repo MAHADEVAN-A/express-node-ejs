@@ -88,7 +88,7 @@
           let formData1 = new FormData()
           formData1.append('image',fileinput1[0].files[0])
           formData1.append('content',content[0].value)
-          await  axios.post('http://localhost:5000/api/addprojects',formData1,{
+          await  axios.post('https://mahadevan.herokuapp.com/api/addprojects',formData1,{
               headers: {
                 'Content-Type':'multipart/form-data'
               }
@@ -113,7 +113,7 @@
           var content = document.getElementsByClassName('content')         
           formData1.append('image',fileinput1[1].files[0])
           formData1.append('content',content[1].value)
-          await  axios.post('http://localhost:5000/api/addblogs',formData1,{
+          await  axios.post('https://mahadevan.herokuapp.com/api/addblogs',formData1,{
               headers: {
                 'Content-Type':'multipart/form-data'
               }
