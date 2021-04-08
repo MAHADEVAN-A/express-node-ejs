@@ -3,24 +3,16 @@ const router = express.Router()
 const multer = require('multer')
 const dmodel = require('../models/datamodel')
 const helper = require('../helpers/helper.js')
-let pdetails = require('../data/pdetails/details.json');
-let pdata = require('../data/projects.json')
-
-
 
 const fs = require('fs')
 
-var count;
-let acount,detailip,ptitle,files;
-const dir = './public/assets/pdetail/';
+let detailip,ptitle,pdetails,pdata;
 
-const middleware = (req,res,next)=>{
+const middleware = async(req,res,next)=>{
+pdetails = await JSON.parse(fs.readFileSync('./data/pdetails/details.json'));
+pdata = await JSON.parse(fs.readFileSync('./data/projects.json'))
 detailip = pdata.map(item => item.id)
 ptitle = pdata.map(item => item.content)
-count = pdata.length
-files=fs.readdirSync(dir)
-acount = files.length;
-acount++;
 next()
 }
 
@@ -36,7 +28,6 @@ const fileStorageEngine = multer.diskStorage({
     },
     filename: (req,file,cb)=>{
         const id=req.params.i
-        console.log(id)
         cb(null,'image'+id+'.svg')
     }
 })
@@ -62,8 +53,6 @@ const upload = multer({storage:fileStorageEngine})
 const upload2 = multer({storage:fileStorageEngine1})
 
 router.post('/pdetail/:id/:i',middleware,upload.single('image'),async(req,res)=>{
-    console.log(req.params)
-    console.log(req.body);
     let id = req.params.id
 
     await dmodel.updatePdetail(req.params.i,req.params.id,req.body)
@@ -87,7 +76,6 @@ router.post('/addpdetail',middleware,upload2.array('images',3),async(req,res)=>{
 
     await dmodel.insertPdetail(req.body,imagesname)
     .then(post =>{ 
-        console.log(post)
         res.render('eproject',{title:'projects',cont:post,count:post.length,image:'pimage',detail:'epdetail',delet:'pdelete',detailid:detailip})
     })
     .catch(err => {

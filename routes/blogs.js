@@ -1,28 +1,17 @@
 const express=require('express')
 const router = express.Router()
 const multer = require('multer')
-// const app = express()
-// const m = require('../helpers/middlewares')
 const dmodel = require('../models/datamodel')
 
-// const app = express()
 const fs = require('fs')
 
-// // parse form data
-// app.use(express.urlencoded({ extended: false }))
-// // parse json
-// app.use(express.json())
-var count,acount;
-let bdata,detailib,filese;
-const dir = './public/assets/bimage';
+var count;
+let bdata,detailib;
 
-const middleware = (req,res,next)=>{
-bdata = require('../data/blogs.json')
+const middleware = async(req,res,next)=>{
+bdata = await JSON.parse(fs.readFileSync('./data/blogs.json'))
 detailib = bdata.map(item => item.id)
 count = bdata.length
-files=fs.readdirSync(dir)
-acount = files.length;
-acount++;
 next()
 }
 
@@ -74,22 +63,10 @@ router.post('/blogs/:id',middleware,upload.single('image'),async(req,res)=>{
     })
 })
 
-// router.get('/project',(req,res)=>{
-//     res.send('<h1>Upload project</h1>')
-// })
-
-// router.put('/project/image/:id',(req,res)=>{
-//     const id=req.params.id
-//     console.log(id);
-//     res.send('<h1>Upload project image</h1>')
-// })
-
 router.post('/addblogs',middleware,upload2.single('image'),async(req,res)=>{
 
     await dmodel.insertBlog(req.body,imagename)
     .then(post =>{ 
-        console.log(post)
-        count = bdata.length
         res.render('eblog',{title:'blogs',cont:post,count:post.length,image:'bimage',detail:'ebdetail',delet:'bdelete',detailid:detailib})
     })
     .catch(err => {

@@ -5,24 +5,15 @@ const fs = require('fs')
 const dmodel = require('../models/datamodel')
 const helper = require('../helpers/helper.js')
 
+let bdata,detailib,btitle,bdetails;
 
-
-let acount,bdata,detailib,btitle,files,bdetails;
-var count;
-const dir = './public/assets/bdetail/';
-
-const middleware = (req,res,next)=>{
-bdetails = require('../data/bdetails/details.json');
-bdata = require('../data/blogs.json')
+const middleware = async(req,res,next)=>{
+bdetails = await JSON.parse(fs.readFileSync('./data/bdetails/details.json'));
+bdata = await JSON.parse(fs.readFileSync('./data/blogs.json'))
 detailib = bdata.map(item => item.id)
 btitle = bdata.map(item => item.content)
-count = bdata.length
-files=fs.readdirSync(dir)
-acount = files.length;
-acount++;
 next()
 }
-
 
 var count4;
 const fileStorageEngine = multer.diskStorage({
@@ -84,8 +75,6 @@ router.post('/addbdetail',middleware,upload2.array('images',3),async(req,res)=>{
 
     await dmodel.insertBdetail(req.body,imagesname)
     .then(post =>{ 
-        console.log(post)
-        count = bdata.length
         res.render('eblog',{title:'blogs',cont:post,count:post.length,image:'bimage',detail:'ebdetail',delet:'bdelete',detailid:detailib})
     })
     .catch(err => {

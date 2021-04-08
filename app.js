@@ -2,13 +2,12 @@ const express = require('express')
 const fs = require('fs')
 // const path = require('path')
 
-// const dirr = path.resolve(__dirname,'./public/assets/pimage');
-// console.log(dirr)
 
 const app = express()
 const routes= require('./routes/index')
 const userRoutes= require('./routes/users/user')
-const ejs = require('ejs')
+
+// const ejs = require('ejs')
 app.set('view engine','ejs')
 app.use(express.static('./public'))
 app.use('/',userRoutes)
@@ -18,72 +17,86 @@ app.use('/api',routes)
 
 let data,pdata,cdata,bdata,pdetails,bdetails,count1,count2,count3,count4,detailip,detailib,btitle,ptitle;
 
-const middlewareFunctions = async(req,res,next)=>{
-data = await JSON.parse(fs.readFileSync('./data/profile.json'))
-pdata = await JSON.parse(fs.readFileSync('./data/projects.json'))
-cdata = await JSON.parse(fs.readFileSync('./data/contact.json'))
-bdata = await JSON.parse(fs.readFileSync('./data/blogs.json'))
-pdetails = await JSON.parse(fs.readFileSync('./data/pdetails/details.json'))
-bdetails = await JSON.parse(fs.readFileSync('./data/bdetails/details.json'))
+// const middlewareFunctions = async(req,res,next)=>{
+// data = await JSON.parse(fs.readFileSync('./data/profile.json'))
+// pdata = await JSON.parse(fs.readFileSync('./data/projects.json'))
+// cdata = await JSON.parse(fs.readFileSync('./data/contact.json'))
+// bdata = await JSON.parse(fs.readFileSync('./data/blogs.json'))
+// pdetails = await JSON.parse(fs.readFileSync('./data/pdetails/details.json'))
+// bdetails = await JSON.parse(fs.readFileSync('./data/bdetails/details.json'))
+// detailip = pdata.map(item => item.id)
+// detailib = bdata.map(item => item.id)
+// btitle = bdata.map(item => item.content)
+// ptitle = pdata.map(item => item.content)
+// count3=3,count4=3;
+// count1 = bdata.length
+// count2 = pdata.length
+// next()
+// }
 
-detailip = pdata.map(item => item.id)
-detailib = bdata.map(item => item.id)
-// console.log(detailip);
-btitle = bdata.map(item => item.content)
-ptitle = pdata.map(item => item.content)
-count3=3,count4=3;
-count1 = bdata.length
-count2 = pdata.length
-// console.log(btitle)
-// console.log(ptitle)
-next()
+const middlewarefunctions1 = async(req,res,next)=>{
+    data = await JSON.parse(fs.readFileSync('./data/profile.json'))
+    next()
 }
 
+const middlewarefunctions2 = async(req,res,next)=>{
+    pdata = await JSON.parse(fs.readFileSync('./data/projects.json'))
+    count2 = pdata.length
+    detailip = pdata.map(item => item.id)
+    next()
+}
 
-// const dir1 = './public/assets/bimage'
-// const dir2 = './public/assets/pimage'
-// const dir3 = './public/assets/pdetail'
-// const dir4 = './public/assets/bdetail'
-// fs.readdir(dir1,(err,files)=>{
-//      count1 = files.length
-// })
-// fs.readdir(dir2,(err,files)=>{
-//     count2 = files.length
-// })
-// fs.readdir(dir3,(err,files)=>{
-//     count3 = files.length
-// })
-// fs.readdir(dir4,(err,files)=>{
-//     count4 = files.length
-// })
+const middlewarefunctions3 = async(req,res,next)=>{
+    pdata = await JSON.parse(fs.readFileSync('./data/projects.json'))
+    pdetails = await JSON.parse(fs.readFileSync('./data/pdetails/details.json'))
+    count3=3;
+    ptitle = pdata.map(item => item.content)
+    next()
+}
 
+const middlewarefunctions4 = async(req,res,next)=>{
+    bdata = await JSON.parse(fs.readFileSync('./data/blogs.json'))
+    count1 = bdata.length
+    detailib = bdata.map(item => item.id)
+    next()
+}
 
-console.log('image'+`${Date.now()}`)
+const middlewarefunctions5 = async(req,res,next)=>{
+    bdata = await JSON.parse(fs.readFileSync('./data/blogs.json'))
+    bdetails = await JSON.parse(fs.readFileSync('./data/bdetails/details.json'))
+    count4=3;
+    btitle = bdata.map(item => item.content)
+    next()
+}
 
-app.get('/admiin',middlewareFunctions,(req,res)=>{
+const middlewarefunctions6 = async(req,res,next)=>{
+    cdata = await JSON.parse(fs.readFileSync('./data/contact.json'))
+    next()
+}
+
+app.get('/admin',middlewarefunctions1,(req,res)=>{
     res.render('index',{profileData:data})
 })
 
-app.get('/eproject',middlewareFunctions,(req,res)=>{
+app.get('/eproject',middlewarefunctions2,(req,res)=>{
     res.render('eproject',{title:'projects',cont:pdata,count:count2,image:'pimage',detail:'epdetail',delet:'pdelete',detailid:detailip})
 })
 
-app.get('/epdetail/:id',middlewareFunctions,(req,res)=>{
+app.get('/epdetail/:id',middlewarefunctions3,(req,res)=>{
     let id = req.params.id
     res.render('epdetail',{dtitle:ptitle[id-1],title:'pdetail',count:count3,image:'pdetail',id,details:pdetails[id-1].pdetails,imagesname:pdetails[id-1].images})
 })
 
-app.get('/eblog',middlewareFunctions,(req,res)=>{
+app.get('/eblog',middlewarefunctions4,(req,res)=>{
     res.render('eblog',{title:'blogs',cont:bdata,count:count1,image:'bimage',detail:'ebdetail',delet:'bdelete',detailid:detailib})
 })
-// console.log(bdetails[0].bdetails)
-app.get('/ebdetail/:id',middlewareFunctions,(req,res)=>{
-    console.log('hellyeah')
+
+app.get('/ebdetail/:id',middlewarefunctions5,(req,res)=>{
     let id = req.params.id
     res.render('ebdetail',{dtitle:btitle[id-1],title:'bdetail',count:count4,image:'bdetail',id,details:bdetails[id-1].bdetails,imagesname:bdetails[id-1].images})
 })
 
-app.get('/econtact',middlewareFunctions,(req,res)=>{
+app.get('/econtact',middlewarefunctions6,(req,res)=>{
     res.render('econtact',{contactData:cdata})
 })
 

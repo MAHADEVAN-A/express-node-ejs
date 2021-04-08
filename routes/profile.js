@@ -1,19 +1,10 @@
 const express=require('express')
 const app = express()
-// const path = require('path')
 const router = express.Router()
 const multer = require('multer')
-
 const dmodel = require('../models/datamodel')
 const m = require('../helpers/middlewares')
-// const ejs = require('ejs')
 
-// app.set('view engine','ejs')
-// app.set('views',__dirname+'/views')
-// parse form data
-app.use(express.urlencoded({ extended: false }))
-// parse json
-app.use(express.json())
 
 const fileStorageEngine = multer.diskStorage({
     destination: (req,file,cb)=>{
@@ -41,10 +32,6 @@ router.post('/profile',upload.single('image'), m.checkContent, async(req,res)=>{
     })
     console.log('successfully updated profile')
 })
-
-// router.put('/profile/content',(req,res)=>{
-//     res.send('<h1>Upload profile content</h1>')
-// })
 
 
 

@@ -1,6 +1,6 @@
 <div class="navbar">
     <div class="title">
-       <h2> <a href="/admiin">devApp</a></h2>
+       <h2> <a href="/admin">devApp</a></h2>
     </div>
     <% var nlink=['/eproject','/eblog','/econtact'] %>
     <% var ntext=['project','blog','contact'] %>
@@ -34,6 +34,7 @@
                             <input type="text" name="content2" class="content2">
                             <label for="content3"><h2>Enter the content3:</h2></label>
                             <input type="text" name="content3" class="content3">
+                            <h2>Select 3 .svg files:</h2>
                             <input type="file" name="images" class="file2" multiple>
                         </form>
                         <button class="btn" type="button">SEND</button>
@@ -50,6 +51,7 @@
                             <input type="text" name="content2" class="content2">
                             <label for="content3"><h2>Enter the content3:</h2></label>
                             <input type="text" name="content3" class="content3">
+                            <h2>Select 3 .svg files:</h2>
                             <input type="file" name="images" class="file2" multiple>
                         </form>
                         <button class="btn" type="button">SEND</button>
@@ -88,7 +90,7 @@
           let formData1 = new FormData()
           formData1.append('image',fileinput1[0].files[0])
           formData1.append('content',content[0].value)
-          await  axios.post('https://mahadevan.herokuapp.com/api/addprojects',formData1,{
+          await  axios.post('http://localhost:5000/api/addprojects',formData1,{
               headers: {
                 'Content-Type':'multipart/form-data'
               }
@@ -113,7 +115,7 @@
           var content = document.getElementsByClassName('content')         
           formData1.append('image',fileinput1[1].files[0])
           formData1.append('content',content[1].value)
-          await  axios.post('https://mahadevan.herokuapp.com/api/addblogs',formData1,{
+          await  axios.post('http://localhost:5000/api/addblogs',formData1,{
               headers: {
                 'Content-Type':'multipart/form-data'
               }

@@ -3,26 +3,15 @@ const router = express.Router()
 const multer = require('multer')
 const dmodel = require('../models/datamodel')
 const m = require('../helpers/middlewares')
-// const app = express()
-
-// const app = express()
 const fs = require('fs')
 
-// // parse form data
-// app.use(express.urlencoded({ extended: false }))
-// // parse json
-// app.use(express.json())
-const dir = './public/assets/pimage';
-let pdata,detailip,acount,files;
-pdata = require('../data/projects.json')
+let pdata,detailip;
 var count;
 
-const middleware = (req,res,next)=>{
+const middleware = async(req,res,next)=>{
+pdata = await JSON.parse(fs.readFileSync('./data/projects.json'))
 detailip = pdata.map(item => item.id)
 count = pdata.length
-files= fs.readdirSync(dir)
-acount = files.length;
-acount++;
 next()
 }
 
@@ -62,7 +51,6 @@ router.post('/projects/:id',middleware,upload.single('image'), m.checkContent, a
 
     await dmodel.updateProject(req.params.id,req.body,imagename)
     .then(post =>{ 
-        console.log(post)
         count = pdata.length
         res.render('eproject',{title:'projects',cont:post,count:count,image:'pimage',detail:'epdetail',delet:'pdelete',detailid:detailip})
     })
@@ -73,17 +61,6 @@ router.post('/projects/:id',middleware,upload.single('image'), m.checkContent, a
         res.status(500).json({ message: err.message })
     })
 })
-
-// router.get('/project',(req,res)=>{
-//     res.send('<h1>Upload project</h1>')
-// })
-
-// router.put('/project/image/:id',(req,res)=>{
-//     const id=req.params.id
-//     console.log(id);
-//     res.send('<h1>Upload project image</h1>')
-// })
-
 
 router.post('/addprojects',middleware,upload2.single('image'),async(req,res)=>{
     console.log(req.body,req.file);

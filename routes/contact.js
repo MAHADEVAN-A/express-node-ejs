@@ -1,16 +1,9 @@
 const express=require('express')
 const app = express()
-const path = require('path')
 const router = express.Router()
 const dmodel = require('../models/datamodel')
 const m = require('../helpers/middlewares')
-
 const multer = require('multer')
-
-// parse form data
-app.use(express.urlencoded({ extended: false }))
-// parse json
-app.use(express.json())
 
 const fileStorageEngine = multer.diskStorage({
     destination: (req,file,cb)=>{
