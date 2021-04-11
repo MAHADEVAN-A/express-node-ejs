@@ -79,5 +79,9 @@ router.post('/addprojects',middleware,upload2.single('image'),async(req,res)=>{
     res.end()
 })
 
+router.get('/getproject',(req,res)=>{
+    // console.log('hello')
+    res.json(JSON.parse(fs.readFileSync('./data/projects.json')))
+})
 
 module.exports= router;

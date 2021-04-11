@@ -1,4 +1,5 @@
 const express=require('express')
+const fs = require('fs')
 const app = express()
 const router = express.Router()
 const dmodel = require('../models/datamodel')
@@ -29,6 +30,12 @@ router.post('/contact', upload.single('contact'),m.checkContact,async(req,res)=>
         }
         res.status(500).json({ message: err.message })
     })
+})
+
+
+router.get('/getcontact',(req,res)=>{
+    // console.log('hello')
+    res.json(JSON.parse(fs.readFileSync('./data/contact.json')))
 })
 
 // router.put('/contact/email',(req,res)=>{

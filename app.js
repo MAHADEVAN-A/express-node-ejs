@@ -74,7 +74,7 @@ const middlewarefunctions6 = async(req,res,next)=>{
     next()
 }
 
-app.get('/admiin',middlewarefunctions1,(req,res)=>{
+app.get('/admin',middlewarefunctions1,(req,res)=>{
     res.render('index',{profileData:data})
 })
 

@@ -1,4 +1,5 @@
 const express=require('express')
+const fs = require('fs')
 const app = express()
 const router = express.Router()
 const multer = require('multer')
@@ -31,6 +32,12 @@ router.post('/profile',upload.single('image'), m.checkContent, async(req,res)=>{
         res.status(500).json({ message: err.message })
     })
     console.log('successfully updated profile')
+})
+
+
+router.get('/getprofile',(req,res)=>{
+    // console.log('hello')
+    res.json(JSON.parse(fs.readFileSync('./data/profile.json')))
 })
 
 

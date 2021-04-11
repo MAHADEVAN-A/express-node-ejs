@@ -78,4 +78,10 @@ router.post('/addblogs',middleware,upload2.single('image'),async(req,res)=>{
 
 })
 
+
+router.get('/getblog',(req,res)=>{
+    // console.log('hello')
+    res.json(JSON.parse(fs.readFileSync('./data/blogs.json')))
+})
+
 module.exports= router;
