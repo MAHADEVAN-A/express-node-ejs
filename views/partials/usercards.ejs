@@ -24,7 +24,7 @@
      console.log(detaillid)
      for(let j=0;j<count;j++){ 
          console.log(j,count,detaillid[j],'devan');
-         let loca = `http://localhost:5000/${detail}/${j+1}`;
+         let loca = `https://mahadevan.herokuapp.com/${detail}/${j+1}`;
         cards[j].addEventListener('click',function(){
             window.location= loca;
             console.log(j,'count');
