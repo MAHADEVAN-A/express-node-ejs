@@ -85,5 +85,18 @@ router.post('/addbdetail',middleware,upload2.array('images',3),async(req,res)=>{
     })
 })
 
+router.get('/getbdetailall',async(req,res)=>{
+    const bd=await JSON.parse(fs.readFileSync('./data/bdetails/details.json'));
+    res.json(bd)
+})
+
+router.get('/getbdetail/:id',async(req,res)=>{
+    let id= req.params.id
+    const bd=await JSON.parse(fs.readFileSync('./data/bdetails/details.json'));
+    const dd = bd.find((item)=>{
+        return item.id===id
+    })
+    res.json(dd)
+})
 
 module.exports= router;
