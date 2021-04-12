@@ -1,7 +1,8 @@
 const express = require('express')
 const fs = require('fs')
+const cors = require('cors');
 // const path = require('path')
-
+app.use(cors());
 
 const app = express()
 const routes= require('./routes/index')
