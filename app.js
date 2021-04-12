@@ -2,7 +2,7 @@ const express = require('express')
 const fs = require('fs')
 const cors = require('cors');
 // const path = require('path')
-app.use(cors());
+
 
 const app = express()
 const routes= require('./routes/index')
@@ -11,6 +11,7 @@ const userRoutes= require('./routes/users/user')
 // const ejs = require('ejs')
 app.set('view engine','ejs')
 app.use(express.static('./public'))
+app.use(cors());
 app.use('/',userRoutes)
 
 
