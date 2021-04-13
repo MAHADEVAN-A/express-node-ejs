@@ -1,6 +1,6 @@
 const express = require('express')
 const fs = require('fs')
-const cors = require('cors');
+const cors = require('cors')
 // const path = require('path')
 
 
@@ -11,7 +11,7 @@ const userRoutes= require('./routes/users/user')
 // const ejs = require('ejs')
 app.set('view engine','ejs')
 app.use(express.static('./public'))
-app.use(cors());
+app.use(cors())
 app.use('/',userRoutes)
 
 
@@ -78,6 +78,10 @@ const middlewarefunctions6 = async(req,res,next)=>{
 
 app.get('/admin',middlewarefunctions1,(req,res)=>{
     res.render('index',{profileData:data})
+})
+
+app.get('/OZsum',(req,res)=>{
+    res.render('OZsum')
 })
 
 app.get('/eproject',middlewarefunctions2,(req,res)=>{
