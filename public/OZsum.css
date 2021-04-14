@@ -383,7 +383,7 @@ section .content ul li i{
 
 
 .contact{
-  height:100vh;
+  min-height:100vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -486,7 +486,7 @@ color:red;
     text-align: center;
 }
 .contact{
-  height:80vh;
+  min-height:80vh;
     display: block;
     /* border:2px solid black; */
     margin:0;
