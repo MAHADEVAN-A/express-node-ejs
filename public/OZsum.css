@@ -286,6 +286,7 @@ section .content ul li i{
           padding:10px 25px;
       }
       section .content span{
+          font-weight:300;
           font-size:22px;
       }
       section .content ul{
@@ -303,6 +304,7 @@ section .content ul li i{
           padding:10px 25px;
       }
       .section2 .content span{
+          font-weight:300;
           font-size:21px;
       }
       .section2 .content ul{
