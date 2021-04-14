@@ -181,7 +181,7 @@
       font-size: 20px;
       color:white;
     }
-    a.active,a:hover{
+     nav ul li a.active,a:hover{
       background: rgb(234, 220, 141);
       color:rgb(50, 43, 43);
       transition: .5s;
@@ -286,7 +286,7 @@ section .content ul li i{
           padding:10px 25px;
       }
       section .content span{
-          font-weight:300;
+        font-weight:300;
           font-size:22px;
       }
       section .content ul{
@@ -301,6 +301,7 @@ section .content ul li i{
           width:90%;
       }
       .section2{
+        /* min-height:100vh; */
           padding:10px 25px;
       }
       .section2 .content span{
@@ -312,7 +313,7 @@ section .content ul li i{
       }
   }
   .action{
-    margin:40px;
+    /* margin:40px; */
   }
   .action a{
     text-decoration: none;
@@ -536,4 +537,14 @@ color:red;
       gap:30px;
       flex-direction: column;
   }
+}
+
+.slink a{
+  color:black;
+  font-size: 40px;
+  text-decoration: none;
+  float: right;
+}
+.slink a:hover{
+  color:black;
 }
