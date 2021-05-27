@@ -7,11 +7,11 @@ const cors = require('cors')
 const app = express()
 const routes= require('./routes/index')
 const userRoutes= require('./routes/users/user')
-
+app.use(cors())
 // const ejs = require('ejs')
 app.set('view engine','ejs')
 app.use(express.static('./public'))
-app.use(cors())
+
 app.use('/',userRoutes)
 
 
@@ -104,6 +104,10 @@ app.get('/ebdetail/:id',middlewarefunctions5,(req,res)=>{
 
 app.get('/econtact',middlewarefunctions6,(req,res)=>{
     res.render('econtact',{contactData:cdata})
+})
+
+app.get('/portfolio',(req,res)=>{
+    res.render('portfolio')
 })
 
 const port = process.env.PORT || 5000
