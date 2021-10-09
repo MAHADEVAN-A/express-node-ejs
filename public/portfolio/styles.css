@@ -184,6 +184,7 @@ img {
 .nav {
   max-width: 968px;
   height: var(--header-height);
+  padding:2rem 0;
   display: flex;
   justify-content: space-between;
   align-items: center;
